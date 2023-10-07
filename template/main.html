@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" type = "text/css" media = "screen" href = "{% static 'styles/main.css'%}">
+
+    <title>Document</title>
+
+    <style>
+
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 10vh;
+                background-color: #B7202E;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 2vh;
+                box-sizing: border-box;
+                z-index: 9999;
+            }
+            
+            .right{
+                display: flex;
+            }
+            .left{
+                margin-right: auto;
+                display: flex;
+            }
+
+            .content {
+                margin-top: 10vh;
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            }
+
+            .navlinks{
+                text-decoration: none;
+                font-size: 3vh;
+                color: white;
+                margin: 0;
+                padding: 2vh;
+                font-family: 'Times New Roman', Times, serif;
+            }
+
+            .navlinks:hover{
+                color: black;
+            }
+
+            .messages{
+                z-index: 999;
+                border-radius: 1vh;
+                padding: 1vh;
+                font-size: 2.5vh;
+            }
+
+            .messages {
+                position: fixed;
+                z-index: 9999;
+                border-radius: 0.5vh;
+                padding: 1vh;
+                font-size: 3vh;
+                border-style: solid;
+                border-width: 0.2vh;
+                width: 70vw;
+                height: 9vh;
+                font-style: italic;
+                text-align: center;
+                background-color: rgb(255, 248, 248);
+                top: 15vh;
+                left: 50%;
+                transform: translateX(-50%);
+                animation: fadeOut 3s ease-out forwards;
+                box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);
+            }
+
+            @keyframes fadeOut {
+                0% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    display: none;
+                }
+            }
+
+
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    {% block content %}  
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div {% if message.tags %} class = "{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+    {% endblock content %}
+
+</body>
+
+</html>
+
+<script>
+function toggleNav() {
+    var sideNav = document.getElementById('sideNav');
+    var arrow = document.querySelector('.arrow');
+    if (sideNav.style.left === '-200px') {
+        sideNav.style.left = '0px'; // Open the side navigation
+        arrow.style.transform = 'rotate(-135deg)'; // Rotate the arrow icon
+
+    } else {
+        sideNav.style.left = '-200px'; // Close the side navigation
+        arrow.style.transform = 'rotate(45deg)'; // Rotate the arrow icon }
+}
+}
+</script>

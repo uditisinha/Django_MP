@@ -1,0 +1,30 @@
+{% block content %}
+        <div class = "navbar">
+
+            <div class = "left">
+                <a href = "{% url 'home' %}" class = "navlinks">Home</a>
+            </div>
+
+            <div class = "right">
+
+                {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                    <a href = "{% url 'users_allowed' %}" class = "navlinks">Manage Users</a>
+                {% endif %}
+                    <a href = "{% url 'committees_list' %}" class = "navlinks">Committees</a>
+                    <a href = "{% url 'file-start' %}" class = "navlinks">My Files</a>
+                    <a href = "{% url 'profile' user.id %}" class = "navlinks">My Profile</a>
+                {% endif %}
+
+                {% if request.user.is_authenticated %}
+                    <a href = "{% url 'logout' %}" class = "navlinks">Logout</a>
+                {% else %}
+                    <a href = "{% url 'login' %}" class = "navlinks">Login</a>
+                
+                {% endif %}
+
+            </div>
+
+        </div>
+
+{% endblock content %}
