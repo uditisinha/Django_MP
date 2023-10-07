@@ -1,0 +1,361 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+
+<head>
+<style>
+    .profilepic{
+        display: flex;
+        flex-direction: column;
+    }
+
+    body{
+      margin: 0;
+    }
+
+    .carousel-item a{
+      color:white;
+    }
+
+    .top{
+        height: 49.25vh;
+        background-image:url("../media/images/campus.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-style: solid;
+        border-width: 0.01vh;
+        margin-left: 0;
+    }
+
+    .bottom{
+        display: flex;
+        max-width: 80%;
+        max-height: 35vh;
+        border-style: solid;
+        border-width: 0.01vh;
+        border-color: white;
+        border-top: 0;
+    }
+
+    .details{
+        display: flex;
+        width: 90%;
+        height: fit-content;
+        border-width: 0.01vh;
+        border-color: white;
+        border-top: 0;
+        margin-left: 5vh;
+        margin-top: 6vh;
+        margin-bottom: 7vh;
+        flex: 1;
+    }
+
+    .carousel-inner h4{
+        font-size: 4vh;
+        margin-top: 5vh;
+        margin-left: 2vh;
+        color: #949494;
+        white-space: nowrap; 
+    }
+
+    .details h4{
+        font-size: 4vh;
+        margin-top: 5vh;
+        margin-left: 2vh;
+        color: #949494;
+        white-space: nowrap; 
+    }
+
+    .details h6{
+        color: #B7202E;
+        font-size: 3vh;
+        margin-top: 1vh;
+        margin-left: 2vh;
+        white-space: nowrap; 
+    }
+
+    .leftdetails, .rightdetails {
+        width: 50%;
+        white-space: nowrap; 
+    }
+
+    .leftdetails h4,
+    .rightdetails h4,
+    .leftdetails h6,
+    .rightdetails h6 {
+        margin-bottom: 0; 
+    }
+
+    .profile-picture {
+      position: absolute;
+      top: 47vh;
+      left: 18vh;
+      width: 12vw; /* Adjust the width as needed */
+      height: 12vw; /* Adjust the height as needed */
+      border-radius: 5%; /* Optional: Applies a circular shape to the image */
+      border: 0.4vh solid black; /* Optional: Adds a white border around the image */
+      z-index: 2; /* Ensures the image appears above the background */
+    }
+
+    .editprofile{
+      margin-top: 12vh;
+      padding: 2vh;
+      background-color: #B7202E;
+      color: white;
+      border-radius: 1vh;
+      width: 20vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 4vh;
+      border-width: 0.1vh;
+      font-size: 2vh;
+    }
+
+    .editprofile:hover{
+      background-color: #821925;
+    }
+
+    .edit_a{
+      text-decoration: none;
+    } 
+    
+    .carousel-item{
+          margin-top: 2vh;
+          background-color: #FEE2E2;
+          border-radius: 1vh;
+          border-style: solid;
+          border-width: 0.2vh;
+          border-color: black;
+          height: 40vh;
+          word-wrap: break-word;
+      }
+    
+      #carouselExampleIndicators {
+          width: 90vh;
+          max-width: 90vh;
+          margin: 0 auto;
+          word-wrap: break-word;
+          overflow: hidden;
+      }
+    
+      .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 10vh;
+          background-color: #B7202E;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 2vh;
+          box-sizing: border-box;
+          z-index: 9999;          
+          font-size: 3vh;      
+      }
+    
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon {
+          width: 5vh;
+          height: 5vh;
+          margin-top: 0vh;
+      }
+    
+      .carousel-control-prev-icon{
+          margin-right: 5vh;
+      }
+    
+      .carousel-control-next-icon {
+          margin-left: 5vh;
+      }
+    
+      .committee_name_slider{
+          font-size: 3vh;
+          text-decoration: underline;
+          margin-top: 5vh;
+          max-width: 90vh;
+          height: 9vh;
+          overflow: hidden;
+          text-align: center;
+          margin: auto;
+          margin-top: 4vh;
+          word-wrap: break-word;
+          padding: 2vh;
+      }
+    
+      .carousel-item{
+          word-wrap: break-word;
+      }
+    
+      .carousel-item:nth-of-type(even) {
+          background-color: #D9D9D9;
+      }
+    
+      .carousel-item:nth-of-type(odd) {
+          background-color: #FEE2E2;
+      }
+
+      .position_inner{
+        font-size: 3vh;
+        margin-left: 1vh;
+      }
+
+      .position{
+        margin-top: 5vh;
+        display: flex;
+        justify-content: center;
+      }
+
+      .position h4{
+        font-size: 3vh; 
+        margin: 0; 
+        color: #B7202E;
+        padding: 0;
+      }
+
+      .redirect_folder{
+            padding: 1vh;
+            background-color: #B7202E;
+            color: white;
+            width: 20vh;
+            margin-left: 20vh;
+            margin-bottom: 5vh;
+            font-size: 2.5vh;
+            border-radius: 1vh;
+            border-width: 0.2vh;
+            margin-top: 0;
+        }
+
+      .redirect_folder:hover{
+        background-color: #821925;
+      }
+      
+        .committee_name_slider{
+            font-size: 3vh;
+            text-decoration: underline;
+            color: black;
+            max-width: 90vh;
+            max-height: 10vh;
+            text-align: center;
+            overflow: hidden;
+            margin: auto;
+            margin-top: 5vh;
+        }
+
+  </style>
+</head>
+
+<body>
+
+  {% if messages %}
+  <div class="messages">
+      {% for message in messages %}
+      <div {% if message.tags %} class = "{{ message.tags }}"{% endif %}>{{ message }}</div>
+      {% endfor %}
+  </div>
+  {% endif %}
+  
+<div class = "content">
+  <div class="profilepic">
+    <div class="top">
+      <div class="upper_square"></div>
+      </div>
+    <div class="bottom"></div>
+  </div>
+
+  {% if user.honorific %}
+  <h1 style="font-size: 6vh; margin-top: 2vh; margin-left: 50vh; position:relative">{{user.honorific}} {{user.pname}}</h1>
+  {% else %}
+  <h1 style="font-size: 6vh; margin-top: 2vh; margin-left: 50vh; position:relative">{{user.pname}}</h1>
+  {% endif %}
+
+  {% if user.avatar %}
+  <img class="profile-picture" src="{{ user.avatar.url }}">
+  {% else %}
+  <img class="profile-picture" src="../media/images/default_user.jpg">
+  {% endif %}
+
+  <div class="details">
+    <div class="leftdetails">
+      <h4>Department</h4>
+      <h6>{{user.department}}</h6>
+      <h4>Position</h4>
+      <h6>{{user.position}}</h6>
+    </div>
+    <div class="rightdetails">
+      <h4></h4>
+      <h6></h6>
+      <h4>Email</h4>
+      <h6>{{user.email}}</h6> 
+      <h4>Number</h4>
+      <h6>{{user.number}}</h6>
+    </div>
+
+    <div id = "carouselExampleIndicators" class = "carousel slide">
+      <div class = "carousel-indicators">
+          {% for committee in committees %}
+              <button type = "button" data-bs-target = "#carouselExampleIndicators" data-bs-slide-to = "{{ forloop.counter0 }}" {% if forloop.first %} class="active"{% endif %} aria-label = "Slide {{ forloop.counter }}" style = "width: 5vh">
+              </button>
+          {% endfor %}
+      </div>
+            
+      <div class = "carousel-inner">
+          {% for committee in committees %}
+          <div class = "carousel-item {% if forloop.first %}active{% endif %}">
+            <a href="{% url 'committee' committee.id %}"><h1 class = "committee_name_slider">{{committee}}</h1></a>
+
+              {% if user == committee.convener %}
+              <div class = "position">
+                <h4>Position:</h4>
+                <h1 class = "position_inner">Convener</h1>
+              </div>
+              {% endif %}
+
+              {% if user in committee.members.all %}
+              <div class = "position">
+                <h4>Position:</h4>
+                <h1 class = "position_inner">Member</h1>
+              </div>
+              {% endif %}
+
+              {% if user in committee.staff.all %}
+              <div class = "position">
+                <h4>Position:</h4>
+                <h1 class = "position_inner">Staff</h1>
+              </div>
+              {% endif %}
+
+            {% if request.user.id == user.id %}
+              <a href = "/media/files/{{committee}}/"><button class = "redirect_folder">Show folder</button></a>
+            {% endif %}
+            </div>
+          {% endfor %}
+      </div>
+            
+      <button class = "carousel-control-prev" type = "button" data-bs-target = "#carouselExampleIndicators" data-bs-slide = "prev">
+          <span class = "carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class = "visually-hidden">Previous</span>
+      </button>
+      <button class = "carousel-control-next" type = "button" data-bs-target="#carouselExampleIndicators" data-bs-slide = "next">
+          <span class = "carousel-control-next-icon" aria-hidden = "true"></span>
+          <span class = "visually-hidden">Next</span>
+      </button>
+  </div>
+
+</div>
+
+{% if request.user.id ==  user.id %}
+  <a href="{% url 'edit-profile' request.user.id %}" class = "edit_a"><button class = "editprofile">Edit Your Profile</button></a>
+{% endif %}
+</div>
+</body>
+
+{% endblock %}

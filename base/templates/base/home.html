@@ -1,0 +1,481 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<head>
+    <style>
+
+        body {
+                margin: 0;
+                padding: 0;
+            }
+            
+
+        .top_image_home {
+            width: 100%;
+            height: 60vh;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0;
+            margin: 0;
+            background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)), url("../media/images/homepage.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            color: white;
+        }
+
+
+        .top_image_home_text{
+            margin-top: auto;
+            margin-left: 7vh;
+            width: 80%;
+            padding: 0;
+        }
+
+        .top_image_home_text h1{
+            font-size: 8.5vh;
+            margin: 0;
+        }
+
+        .top_image_home_text h3{
+            font-size: 4vh;
+            margin: 0;
+            margin-bottom: 4vh;
+        }
+        
+        .card1{
+            width: 160vh;
+            height: 80vh;
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            align-items: stretch; 
+            margin-top: 20vh;
+            margin-bottom: 20vh;
+            
+        }
+
+        .leftcard1{
+            background-image: url("../media/images/files_homepage.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1;
+            padding: 5vh;
+            border-bottom-left-radius: 2vh;
+            border-top-left-radius: 2vh;
+            box-shadow: 0px 0px 2vh rgba(0, 0, 0, 0.603);
+        }
+
+        .rightcard1{
+            background-color: #D9D9D9;
+            flex: 1;
+            padding: 5vh;
+            border-bottom-right-radius: 2vh;
+            border-top-right-radius: 2vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            text-align: center;
+            box-shadow: 0px 0px 2vh rgba(0, 0, 0, 0.603);
+        }
+
+        .card2{
+            width: 160vh;
+            height: 80vh;
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            align-items: stretch; 
+            margin-bottom: 20vh;
+        }
+
+        .leftcard2{
+            background-color: #FEE2E2;
+            flex: 1;
+            padding: 5vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            text-align: center;
+            border-bottom-left-radius: 2vh;
+            border-top-left-radius: 2vh;
+            box-shadow: 0px 0px 2vh rgba(0, 0, 0, 0.603);
+            z-index: 2;
+        }
+
+        .rightcard1 p{
+            font-size: 2.5vh;
+        }
+        
+        .leftcard2 p{
+            font-size: 2.5vh;
+        }
+
+        .rightcard2{
+            background-image: url("../media/images/committee_homepage.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1;
+            padding: 5vh;
+            border-bottom-right-radius: 2vh;
+            border-top-right-radius: 2vh;
+            box-shadow: 0px 0px 2vh rgba(0, 0, 0, 0.603);
+        }
+
+        .rightcard1 h1{
+            font-size: 6vh;
+        }
+
+        .leftcard2 h1{
+            font-size: 6vh;
+        }
+
+        .about{
+            text-align: center;
+            width: 170vh;
+            margin: auto;
+        }
+
+        .about h1{
+            font-size: 6vh;
+        }
+
+        .about p{
+            font-size: 3vh;
+            margin-bottom: 20vh;
+        }
+
+        .contactus{
+            display: flex;
+            background-color: #B7202E;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .leftcontacts{
+            flex: 1;
+            margin-top: 1vh;
+            text-align: center;
+            font-size: 2.5vh;
+        }
+
+        .rightcontacts{
+            flex: 1;
+            margin-top: 1vh;
+            text-align: center;
+            font-size: 2.5vh;
+        }
+
+        .carousel-item{
+            margin-top: 2vh;
+            background-color: #FEE2E2;
+            border-style: solid;
+            border-width: 0.2vh;
+            border-color: black;
+            height: 60vh;
+        }
+
+        #carouselExampleIndicators {
+            width: 120vh;
+            margin: 0 auto;
+        }
+
+        .contactus_heading{
+            text-align: center;
+            background-color: #B7202E;
+            color: white;
+            padding: 0;
+            margin: 0;
+            padding-top: 4vh;
+            font-size: 6vh;
+        }
+    
+    </style>
+</head>
+
+<body>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div {% if message.tags %} class = "{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class = "content">
+    <div class = "top_image_home">
+        <div class = "top_image_home_text">
+            <h1>Welcome {{user.pname}}</h1>
+            <h3>Find and manage all your documents and directories.</h3>
+        </div>
+    </div>
+  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10vh;
+            background-color: #B7202E;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2vh;
+            box-sizing: border-box;
+            z-index: 9999;
+        }
+
+        .error{
+            transform: translateY(20%);
+            color: #821925;
+        }
+
+        .success{
+            transform: translateY(20%);
+            color: green;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            width: 10vh;
+            height: 10vh;
+            margin-top: 0vh;
+        }
+
+        .carousel-control-prev-icon{
+            margin-right: 10vh;
+        }
+
+        .carousel-control-next-icon {
+            margin-left: 10vh;
+        }
+
+        .committee_name_slider{
+            font-size: 4.5vh;
+            text-decoration: underline;
+            color: black;
+            max-width: 90vh;
+            max-height: 13vh;
+            text-align: center;
+            overflow: hidden;
+            margin: auto;
+            margin-top: 5vh;
+        }
+
+        .carousel-item{
+            word-wrap: break-word;
+            margin-top: 0; 
+            border-radius: 1vh;
+            box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);
+        }
+
+        .carousel-item:nth-of-type(even) {
+            background-color: #D9D9D9;
+        }
+
+        .carousel-item:nth-of-type(odd) {
+            background-color: #FEE2E2;
+        }
+
+        .carousel-control-prev-icon{
+            color: black;
+        }
+
+        .committee_description_slider{
+            margin-top: 7vh;
+            height: 15vh;
+            overflow: hidden;
+            overflow-y: scroll;
+            font-size: 2.5vh;
+            text-align: center;
+            margin-left: 18vh;
+            margin-right: 18vh;
+            padding: 2vh;
+        }
+
+        .committee_description_slider::-webkit-scrollbar {
+            width: 1vh;
+        }
+
+        .committee_description_slider::-webkit-scrollbar-thumb {
+            background-color: #878787; 
+            border-radius: 1vh; 
+        }
+
+        .committee_description_slider::-webkit-scrollbar-thumb:hover {
+            background-color: #cccccc; 
+        }
+
+        .position_inner{
+            font-size: 3vh;
+            margin-left: 1vh;
+        }
+
+        .position_home{
+            display: flex;
+            justify-content: center;
+            margin-top: 3vh;
+            text-align: center;
+            display: flex;
+        }
+
+        .position_home h4{
+            font-size: 3vh; 
+            margin: 0; 
+            color: #B7202E;
+            padding: 0;
+        }
+
+        .redirect_folder{
+            padding: 1vh;
+            background-color: #B7202E;
+            color: white;
+            width: 20vh;
+            font-size: 2.5vh;
+            margin-left: 50vh;
+            border-radius: 1vh;
+            border-width: 0.2vh;
+        }
+
+        .redirect_folder:hover{
+            background-color: #821925;
+        }
+
+        .committee_png{
+            margin-top: 10vh;
+            width: 12vh;
+            height: 12vh;
+            margin-left: 47%;
+        }
+
+        .cards_png{
+            width: 8vh;
+            height: 8vh;
+            margin-bottom: 2vh;
+        }
+
+        .contact_png{
+            width: 5vh;
+            height: 5vh;
+            margin-bottom: 3vh;
+        }
+
+    </style>
+
+<img src = "../media/images/committee.png" class = "committee_png">
+<h1 style = "font-size: 6vh; text-align: center;">Your committees</h1>
+    <div id = "carouselExampleIndicators" class = "carousel slide" style = "box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);">
+        <div class = "carousel-indicators">
+            {% for committee in committee_list %}
+                <button type = "button" data-bs-target = "#carouselExampleIndicators" data-bs-slide-to = "{{ forloop.counter0 }}" {% if forloop.first %} class="active"{% endif %} aria-label = "Slide {{ forloop.counter }}" style = "width: 5vh;">
+                </button>
+            {% endfor %}
+        </div>
+              
+        <div class = "carousel-inner">
+            {% for committee in committee_list %}
+            <div class = "carousel-item {% if forloop.first %}active{% endif %}">
+                <a href="{% url 'committee' committee.id %}"><h1 class="committee_name_slider">{{ committee }}</h1></a>
+                <h4 class = "committee_description_slider">{{committee.description}}</h4>
+                
+              {% if user == committee.convener %}
+              <div class = "position_home">
+                <h4>Position:</h4>
+                <h1 class = "position_inner">Convener</h1>
+              </div>
+              {% endif %}
+
+              {% if user in committee.members.all %}
+              <div class = "position_home">
+                <h4>Position:</h4>
+                <h1 class = "position_inner">Member</h1>
+              </div>
+              {% endif %}
+
+              {% if user in committee.staff.all %}
+              <div class = "position_home">
+                <h4>Position:</h4>
+                <h1 class = "position_inner">Staff</h1>
+              </div>
+              {% endif %}
+
+            <a href = "/media/files/{{committee}}/"><button class = "redirect_folder">Show folder</button></a>
+            </div>
+            {% endfor %}
+        </div>
+              
+        <button class = "carousel-control-prev" type = "button" data-bs-target = "#carouselExampleIndicators" data-bs-slide = "prev">
+            <span class = "carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class = "visually-hidden">Previous</span>
+        </button>
+        <button class = "carousel-control-next" type = "button" data-bs-target="#carouselExampleIndicators" data-bs-slide = "next">
+            <span class = "carousel-control-next-icon" aria-hidden = "true"></span>
+            <span class = "visually-hidden">Next</span>
+        </button>
+    </div>
+                 
+    <div class = "card1">
+
+        <div class = "leftcard1"></div>
+
+        <div class = "rightcard1">
+
+            <img src = "../media/images/files.png" class = "cards_png">
+            <h1>Organized documents</h1>
+            <p>Experience hassle-free document retrieval with our meticulously organized file system. Even if the documents date back 10 years, locating the specific file you need becomes effortless. Say goodbye to the tedious search through countless emails – our platform ensures quick access to the required documents without any hassle.</p>
+            
+        </div>
+    </div> 
+
+    <div class = "card2">
+
+        <div class = "leftcard2">
+            <img src = "../media/images/upload.png" class = "cards_png">
+            <h1>Upload and edit</h1>
+            <p>Upload, edit, and delete documents for your committees effortlessly. Take control as the convener, managing committee information and ensuring seamless collaboration. Streamline administrative tasks and keep your committee's file library organized.</p>
+        </div>
+            
+        <div class = "rightcard2"></div>
+    </div>
+      
+<div class = "about">
+    <h1>About</h1>
+    <p>Welcome to our website, dedicated to the document creation and file searching system at KJ Somaiya College of Engineering. Explore our efficient tools for creating documents and quickly searching for files, along with details of our esteemed faculty and committees.</p>
+</div>
+
+
+<h1 class = "contactus_heading">Contact Us</h1>
+<div class = "contactus">
+    <div class = "leftcontacts">
+        <img src = "../media/images/call.png" class = "contact_png"> 
+        <p>+91 9757024851</p>
+        <p>+91 8169925301</p>
+    </div>
+
+    <div class = "rightcontacts">
+        <img src = "../media/images/mail.png" class = "contact_png">
+        <p>uditi.sinha@somaiya.edu</p>
+        <p>priyansh.r@somaiya.edu</p>
+    </div>
+</div>
+</div>
+</body>
+{% endblock content %}

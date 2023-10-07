@@ -1,0 +1,731 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class = "content">
+
+  <head>
+    <style>
+
+
+      .file_card.csv {
+        background-image: url('/media/images/3.png');
+        background-repeat: no-repeat;
+        background-size: 10vh;
+        background-position: bottom right;
+      }
+
+      .file_card.xlsx {
+        background-image: url('/media/images/2.png');
+        background-repeat: no-repeat;
+        background-size: 10vh;
+        background-position: bottom right;
+      }
+
+      .file_card.xls {
+        background-image: url('/media/images/2.png');
+        background-repeat: no-repeat;
+        background-size: 10vh;
+        background-position: bottom right;
+      }
+
+      .file_card.docx {
+        background-image: url('/media/images/1.png');
+        background-repeat: no-repeat;
+        background-size: 10vh;
+        background-position: bottom right;
+      }
+
+      .file_card.pptx{
+        background-image:url('/media/images/5.png');
+        background-repeat: no-repeat;
+        background-size: 10vh;
+        background-position: bottom right;
+      }
+
+      .file_card.pdf{
+        background-image:url('/media/images/4.png');
+        background-repeat: no-repeat;
+        background-size: 10vh;
+        background-position: bottom right;
+      }
+      
+      .file_card.png{
+        background-image:url('/media/images/6.png');
+        background-repeat: no-repeat;
+        background-size: 9vh;
+        background-position: bottom right;
+      }
+
+      .file_card{
+        background-image:url('/media/images/default_file.png');
+        background-repeat: no-repeat;
+        background-size: 9vh;
+        background-position: bottom right;
+      }
+
+      label{
+        margin: 0;
+        padding: 0;
+      }
+
+      .searchbardiv_directories {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 60vh;
+      }
+
+      .searchbar_directories {
+        padding: 2vh;
+        border-width: 0.3vh;
+        border-color: #B7202E;
+        border-radius: 3vh;
+        font-size: 2vh;
+        width: 15vh;
+        margin-left: 2vh;
+        font-size: 2vh;
+      }
+
+      .searchbar_directories:hover{
+        outline: none;
+        border-color: #B7202E;
+        box-shadow: 0 0 0.8vh #B7202E;
+      }
+
+      .searchbar_label {
+        font-size: 3.5vh;
+        margin-right: 1vh;
+      }
+
+      .searchbardiv_files{
+        display: flex;
+        align-items: right;
+        justify-content: right;
+        margin-top: 10vh;
+      }
+
+      .searchbar_files{
+        margin-top: 9vh;
+        margin-right: 3.8vh;
+        padding: 2vh;
+        border-width: 0.3vh;
+        border-color: #B7202E;
+        border-radius: 3vh;
+        font-size: 2vh;
+        width: 30vh;
+        margin-left: 2vh;
+        font-size: 2vh;
+      }
+
+      .committees_directory{
+        position: absolute;
+        top: 56.5%;
+        left: 49.8%;
+        transform: translate(-50%, -50%);
+        width: 100vh;
+        max-width: 100vh;
+        background-color: #D9D9D9;
+        border-radius: 1vh;
+        height: 50vh;
+        overflow: hidden;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        border-style: solid;
+        border-color: black;
+        border-width: 0.1vh;
+        box-shadow: 0px 0px 0.5vh rgba(0, 0, 0, 0.603);
+      }
+
+      .committees_directory::-webkit-scrollbar {
+        width: 1.5vh;
+      }
+
+      .committees_directory::-webkit-scrollbar-track {
+        background-color: #a9a9a9;
+        border-radius: 1vh; 
+      }
+
+      .committees_directory::-webkit-scrollbar-thumb {
+        background-color: #878787; 
+        border-radius: 1vh; 
+      }
+
+      .committees_directory::-webkit-scrollbar-thumb:hover {
+        background-color: #cccccc; 
+      }
+
+      .directory_row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-height: 8.5vh;
+        height: 8.5vh;
+        margin: 0 auto; 
+        border-top: 0.1vh solid black;
+        overflow: hidden;
+      }
+
+      .directory_row:nth-of-type(even) {
+        background-color: #D9D9D9;
+      }
+
+      .directory_row:nth-of-type(odd) {
+        background-color: #FEE2E2;
+      }
+
+      .dir_links {
+        text-decoration: none;
+        font-size: 2.5vh;
+        color: #B7202E;
+      }
+
+      .dir_links:hover{
+        color: #570a13;
+      }
+
+      .directory_row:nth-of-type(even) {
+          background-color: #D9D9D9;
+      }
+
+      .directory_row:nth-of-type(odd) {
+          background-color: #FEE2E2;
+      }
+
+      hr{
+          border: none;
+          border-top: 0.4vh solid black;
+          margin: 0;
+          height: 0.1vh;
+      }
+
+      .directory_row_inner{
+        max-height: 7vh;
+        overflow: hidden;
+        padding-left: 2vh;
+        padding-right: 2vh;
+      }
+
+    </style>
+  </head>
+
+<body>
+
+      {% if check == '1' %}
+
+        <h1 style = "text-align: center; margin-top: 19vh; font-size: 6vh;">Your committee directories</h1>
+        <div class = "committees_directory">
+          {% for dir in files %}
+            {% if dir in committee_names %}
+                <div class = "directory_row">
+                  <div class = "directory_row_inner">
+                    <a href="{{current_url}}{{dir}}/" class = "dir_links">{{dir}}</a>
+                  </div>
+                </div>
+            {% endif %}
+          {% endfor %}
+          <hr style = "border-top: 0.2vh solid black;">
+        </div>
+        
+        <form target = "_blank" method = "GET" action = "{% url 'search-files' %}" class = "searchbardiv_directories"> 
+          <label class = "searchbar_label">Seach for any file from any of your directories: </label>
+          <input type = "test" name = "q" placeholder = "Search... " class = "searchbar_directories"/>
+        </form>
+
+    {% else %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10vh;
+        background-color: #B7202E;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2vh;
+        box-sizing: border-box;
+        z-index: 9999;
+      }
+      
+      .searchbardiv_files{
+        display: flex;
+        align-items: right;
+        justify-content: right;
+        margin-top: 10vh;
+      }
+
+      .searchbar_files{
+        margin-top: 9vh;
+        margin-right: 3.8vh;
+        padding: 2vh;
+        border-width: 0.3vh;
+        border-color: #B7202E;
+        border-radius: 3vh;
+        font-size: 2vh;
+        width: 30vh;
+        margin-left: 2vh;
+        font-size: 2vh;
+      }
+
+      .searchbar_files:hover{
+        outline: none;
+        border-color: #B7202E;
+        box-shadow: 0 0 0.8vh #B7202E;
+      }
+
+      hr{
+          border: none;
+          border-top: 0.4vh solid black;
+          margin: 0;
+          height: 0.1vh;
+      }
+
+      .folders_system{
+        width: 40vh;
+        height: 80vh;
+        position: fixed;
+        top: 15%;
+        background-color: #D9D9D9;
+        margin-left: 0;
+        border-top-right-radius: 1vh;
+        border-bottom-right-radius: 1vh;
+        border-style: solid;
+        border-color: black;
+        border-left: none;
+        border-width: 0.1vh;
+      }
+
+      body{
+        margin-left: 0;
+        font-family: 'Times New Roman', Times, serif;
+      }
+
+      .go_back{
+        background-color: #B7202E;
+        color: white;
+        border-radius: 1vh;
+        border-width: 0.1vh;
+        margin-left: 2vh;
+        position: fixed;
+        top: 13%;
+        font-size: 2vh;
+        padding: 1vh;
+        z-index: 999;
+      }
+
+      .go_back:hover{
+        background-color: #821925;
+      }
+
+      .folders_list{
+        text-align: left;
+        padding-bottom: 1.5vh;
+        max-height: 55vh;
+        overflow: hidden;
+        overflow-y: scroll;
+      }
+
+      .folder_title{
+        font-size: 3vh;
+        text-align: center;
+        margin: 2vh;
+      }
+
+      .folders_list::-webkit-scrollbar {
+        width: 1.5vh;
+      }
+
+      .folders_list::-webkit-scrollbar-track {
+        background-color: #a9a9a9;
+        border-radius: 1vh; 
+      }
+
+      .folders_list::-webkit-scrollbar-thumb {
+        background-color: #878787; 
+        border-radius: 1vh; 
+      }
+
+      .folders_list::-webkit-scrollbar-thumb:hover {
+        background-color: #cccccc; 
+      }
+
+      .folder_name{
+        padding: 1.5vh;
+        font-size: 2.5vh;
+        word-break: break-all;
+      }
+
+      .folder_link:hover{
+        color: rgb(117, 111, 111);
+      }
+
+      .folder_link{
+        text-decoration: none;
+        color: black;
+      }
+
+      .searchbar_folders{
+        text-align: left;
+        position: fixed;
+        top: 85%;
+        margin-top: 0;
+        padding-top: 0;
+        padding: 0;
+      }
+
+      .add_folder{
+        display: flex;
+      }
+
+      .add_folder_field {
+        padding: 2vh;
+        border-width: 0.3vh;
+        border-color: #B7202E;
+        border-radius: 3vh;
+        width: 28vh;
+        margin-left: 1.5vh;
+        font-size: 2vh;
+      }
+
+      .add_folder_field:hover{
+        outline: none;
+        border-color: #B7202E;
+        box-shadow: 0 0 0.5vh #B7202E;
+      }
+
+      .add_folder_button {
+        font-size: 1.5vh;
+        padding: 2vh;
+        background-color: #B7202E;
+        color: white;
+        border-radius: 3.5vh;
+        width: 8vh;
+        border-width: 0.1vh;
+        text-align: center;
+        margin-left: 0.7vh;
+        margin-top: 0.5vh;
+      }
+
+      .add_folder_button:hover{
+        background-color: #821925;
+      }
+
+      .back4{
+        height: 76vh;
+        background-color: white;
+        width: 40.7vh;
+        position: fixed;
+        top: 17%;
+        z-index: -1;
+        border-top-right-radius: 1vh;
+        border-bottom-right-radius: 1vh;
+        border-style: solid;
+        border-color: black;
+        border-width: 0.1vh;
+      }
+
+      .back5{
+        height: 76vh;
+        background-color: #dad9d9;
+        width: 41.5vh;
+        position: fixed;
+        top: 17%;
+        z-index: -2;
+        border-top-right-radius: 1vh;
+        border-bottom-right-radius: 1vh;
+        border-style: solid;
+        border-color: black;
+        border-width: 0.1vh;
+      }
+
+      .back6{
+        width: 42.5vh;
+        height: 78vh;
+        position: fixed;
+        top: 16%;
+        background-color: #9f9e9e;
+        margin-left: 0;
+        border-top-right-radius: 1vh;
+        border-bottom-right-radius: 1vh;
+        border-style: solid;
+        border-color: black;
+        border-left: none;
+        border-width: 0.1vh;
+        z-index: -4;
+      }
+
+      .file_display{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-left: 47.4vh;
+        margin-top: 2vh;
+        margin-bottom: 10vh;
+      }
+
+      .file_card {
+        width: calc(30%); 
+        height: 26vh;
+        border-radius: 1vh;
+        border-style: solid;
+        border-width: 0.2vh;
+        border-color: black;
+        display: flex;
+        flex-direction: column;
+        padding: 2vh;
+        padding-bottom: 0.5vh;
+        margin-right: 3vh;
+        margin-top: 3vh;
+        overflow: hidden;
+        margin-bottom: 2vh;
+      }
+
+      .file_card:hover{
+        box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);
+      }
+
+      
+      .file_card:nth-of-type(odd) {
+        background-color: #FEE2E2;
+      }
+
+      .file_card:nth-of-type(even) {
+        background-color: #D9D9D9;
+      }
+
+      .name_file{
+        text-decoration: none;
+        color: black;
+        font-size: 2.3vh;
+        word-wrap: break-word;
+        overflow: hidden;
+        overflow-y: scroll;
+        padding: 1vh;
+        height: 13vh;
+      }      
+      
+      .name_file::-webkit-scrollbar {
+        width: 0.5vh;
+      }
+ 
+      .name_file::-webkit-scrollbar-thumb {
+        background-color: #878787; 
+        border-radius: 1vh; 
+      }
+      
+      .delete_file{
+        text-decoration: none;
+        color: #B7202E;
+        font-size: 2vh;
+        margin-top: 0;
+        width: 15vh;
+        margin-bottom: 1vh;
+      }
+
+      .delete_file:hover{
+        color: #480e15;
+        text-decoration: underline;
+      }
+
+      .add_files_button{
+        font-size: 2vh;
+        padding: 2vh;
+        background-color: #B7202E;
+        color: white;
+        border-radius: 3.5vh;
+        width: 15vh;
+        height: fit-content;
+        border-width: 0.1vh;
+        text-align: center;
+        margin: 0;
+        margin-top: 9vh;
+        margin-right: 105.5vh;
+      }
+
+      .add_files_button:hover{
+        background-color: #821925;
+      }
+
+      .close_popup{
+        background-color: #B7202E;
+        color: white;
+        padding: 1vh;
+        border-radius: 1vh;
+        border-width: 0.2vh;
+      }
+
+      .add_files_confirm{
+        background-color: #B7202E;
+        color: white;
+        padding: 1vh;
+        border-radius: 1vh;
+        border-width: 0.2vh;
+      }
+
+      label{
+        margin: 0;
+        padding: 0;
+      }
+
+      .folder_line{
+        display: flex;
+        padding: 1vh;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .go_back_png {
+        width: 4vh;
+        height: 3vh;
+      }
+
+      .folder_png{
+        height: 3vh;
+        width: 3vh;
+        margin-top: 1.5vh;
+        margin-left: 2vh;
+        padding: 0;
+      }
+
+      .source{
+        font-size: 2vh;
+        height: 8vh;
+        overflow: hidden;
+        margin: 0;
+        width: 85%;
+        margin-top: 1vh;
+      }
+
+      .file_display_wrapper{
+        position: fixed;
+        z-index: -9999;
+        width: 35%;
+        height: 70vh;
+        font-weight: bold;
+        top: 21vh;
+        left: 40%;
+        background-image: url('/media/images/Somaiya_logo.svg');
+        opacity: 0.2;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+    </style>
+
+  {% if back_url is not None %}
+    <a href = "{{ back_url }}"><button class = "go_back"><img src = "/media/images/go_back.png" class = "go_back_png">
+    </button></a>
+  {% endif %}
+
+    <div class = "folders_system">
+
+      <h4 class = "folder_title">Folders</h4>
+      <hr style = "width: 30vh; margin-left: 5vh; margin-bottom: 2vh;">
+
+        <div class = "folders_list">
+          {% for dir in files %}
+          <div class = "folder_line">
+            <a href="{{current_url}}{{dir}}/" class = "folder_link"><img src="/media/images/files.png" class="folder_png"><div class = "folder_name">{{dir}}</a></div>
+          </div>
+          {% endfor %}
+        </div>
+
+      <hr style = "width: 30vh; margin-left: 5vh; margin-top: 2vh;">
+          {% if check2 is not 1 or request.user.is_superuser %}
+          <form method = "POST" class = "searchbar_folders">
+            {% csrf_token %}
+          <div class = "add_folder">
+            <input type = "text" id = "folderName" name = "name" class = "add_folder_field" placeholder = "Create new folder">
+            <input type = "submit" name = "first_post" value = "Add" class = "add_folder_button">
+          </div>
+            <input type = "hidden" name = "parent_directory" value = "{{directory}}">
+          </form>
+          {% endif %}
+      </div>
+
+      <div class = "back4"></div>
+      <div class = "back5"></div>
+      <div class = "back6"></div>
+      
+
+
+    <div class = "searchbardiv_files">   
+      {% if check2 is not 1 or request.user.is_superuser %}
+      <button data-bs-toggle="modal" data-bs-target="#myModal" class = "add_files_button">Add Files</button>
+      {% endif %}
+      <form action="{{current_url}}" method="GET">
+        <input type="text" name="q" placeholder="Search Files Here.." class = "searchbar_files">
+      </form>
+    </div>
+  
+    <div class = "file_display_wrapper">
+    </div>
+    <div class="file_display">
+      {% for f in files_context %}
+      <div class="file_card {{f.2}}">
+        <a href="{{f.1}}" class = "name_file">{{f.0.name}}</a>
+        <hr style = "border-top: 0.2vh solid black; width: 30vh; margin-left: 5vh; margin-top: 1vh;">
+        <p class = "source">Source: {{f.0}}</p>
+        {% if check2 is not 1 or request.user.is_superuser %}
+        <a href="{% url 'deletefile' f.0.id|urlencode%}" class = "delete_file">Delete file</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+  </div>
+    
+{% if check2 is not 1 or request.user.is_superuser %}
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 8vh;">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-height: 85vh; max-width: 60vh; font-size: 2.5vh;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Add file</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data" style="width: 80%;">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="name">Enter the File Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="example: guidelines_2023">
+            <br>
+          </div>
+
+          <div class = "form-group">
+            <label for = "keywords">Add keywords <u><i>for ease of search</i></u></label>
+            {{form2.keywords}}
+          </div>
+
+          <br>
+
+          <div class = "form-group">
+            {{form2.file}}
+            {{form2.committee}}
+          </div>
+
+          <input type = "hidden" name = "directory" value = "{{directory}}">
+          
+          <div class = "modal-footer">
+            <button type = "submit" class = "add_files_confirm" name = "second_post">Add File</button>
+            <button type = button" class = "close_popup" data-bs-dismiss = "modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endif %}
+
+</div>
+
+</body>
+{% endblock content %}

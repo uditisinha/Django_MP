@@ -1,0 +1,170 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .dropdown-content {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(-10px);
+    }
+
+    .show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dropdown-arrow {
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .add_committee_main {
+        padding-left: 5vh;
+        padding-right: 5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-wrapper {
+        width: 80%;
+        background-color: #FEE2E2;
+        border: 0.2vh solid black;
+        border-radius: 1vh;
+        padding: 5vh;
+        margin-bottom: 10vh;
+        box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);
+    }
+
+    .field-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .field-container input[type = "text"]:hover,
+    .field-container textarea:hover,
+    .field-container select:hover{
+        outline: none;
+        border-color: #B7202E;
+        box-shadow: 0 0 0.5vh #B7202E;
+    }
+
+
+    .add_committee_main input[type="text"],
+    .add_committee_main textarea,
+    .add_committee_main select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        resize: none;
+    }
+
+    .add_committee_main select[multiple="multiple"] {
+        height: 150px;
+    }
+
+    .add_committee_main input[type="submit"] {
+        background-color: #B7202E; 
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .add_committee_main input[type="submit"]:hover {
+        background-color: #821925;
+    }
+
+    .field-container > div:first-child {
+        margin-right: 10px;
+    }
+
+    .errorlist{
+        color: #B7202E;
+    }
+
+</style>
+<div class="content">
+    <h1 style = "font-size: 6vh; text-align: center; margin-top: 15vh; margin-bottom: 5vh;">Add Committee</h1>
+    <div class = "add_committee_main">
+    <div class="form-wrapper">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="field-container">
+                <div>
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                    <p class="error-message">{{ form.name.errors }}</p>
+                </div>
+                <div>
+                    {{ form.level.label_tag }}
+                    {{ form.level }}
+                    <p class="error-message">{{ form.level.errors }}</p>
+                </div>
+            </div>
+            <div class="field-container">
+                <div>
+                    {{ form.description.label_tag }}
+                    {{ form.description }}
+                    <p class="error-message">{{ form.description.errors }}</p>
+                </div>
+                <div>
+                    {{ form.goal.label_tag }}
+                    {{ form.goal }}
+                    <p class="error-message">{{ form.goal.errors }}</p>
+                </div>
+            </div>
+            <div class="field-container">
+                <div>
+                    {{ form.objective.label_tag }}
+                    {{ form.objective }}
+                    <p class="error-message">{{ form.objective.errors }}</p>
+                </div>
+                <div>
+                    {{ form.convener.label_tag }}
+                    {{ form.convener }}
+                    <p class="error-message">{{ form.convener.errors }}</p>
+                </div>
+            </div>
+            <div class="field-container">
+                <div>
+                    <p class="error-message">{{ form.members.errors }}</p>
+                    {{ form.members.label_tag }}
+                    <span class="dropdown-arrow" onclick="toggleDropdown1()">&#9662;</span>
+                    <div id="myDropdown1" class="dropdown-content">
+                    {{ form.members }}
+                    </div>
+                </div>
+                <div>
+                    <p class="error-message">{{ form.staff.errors }}</p>
+                    {{ form.staff.label_tag }}
+                    <span class="dropdown-arrow" onclick="toggleDropdown2()">&#9662;</span>
+                    <div id="myDropdown2" class="dropdown-content">
+                    {{ form.staff }}
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <input type = "submit" value = "Add Committee" style = "margin-top: 10vh;">
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<script>
+    function toggleDropdown1() {
+      var dropdownContent = document.getElementById("myDropdown1");
+     dropdownContent.classList.toggle("show"); 
+    }
+    function toggleDropdown2() {
+      var dropdownContent = document.getElementById("myDropdown2");
+      dropdownContent.classList.toggle("show"); }
+  </script>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    
+.content {
+    margin-top: 20vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-wrapper {
+    width: 80%;
+    background-color: #FEE2E2;
+    border: 0.2vh solid black;
+    border-radius: 1vh;
+    padding: 5vh;
+}
+
+.field-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.field-container input[type = "text"]:hover,
+.field-container textarea:hover,
+.field-container select:hover{
+    outline: none;
+    border-color: #B7202E;
+    box-shadow: 0 0 0.5vh #B7202E;
+}
+
+.content input[type="text"],
+.content textarea,
+.content select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.content select[multiple="multiple"] {
+    height: 150px;
+}
+
+.content input[type="submit"] {
+    background-color: #B7202E; /* Red color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.content input[type="submit"]:hover {
+    background-color: #821925;
+}
+
+.field-container > div:first-child {
+    margin-right: 10px;
+}
+
+</style>
+<div class="content">
+    <div class="form-wrapper">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="field-container">
+                <div>
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                </div>
+                <div>
+                    {{ form.level.label_tag }}
+                    {{ form.level }}
+                </div>
+            </div>
+            <div class="field-container">
+                <div>
+                    {{ form.description.label_tag }}
+                    {{ form.description }}
+                </div>
+                <div>
+                    {{ form.goal.label_tag }}
+                    {{ form.goal }}
+                </div>
+            </div>
+            <div class="field-container">
+                <div>
+                    {{ form.objective.label_tag }}
+                    {{ form.objective }}
+                </div>
+                <div>
+                    {{ form.convener.label_tag }}
+                    {{ form.convener }}
+                </div>
+            </div>
+            <div class="field-container">
+                <div>
+                    {{ form.members.label_tag }}
+                    {{ form.members }}
+                </div>
+                <div>
+                    {{ form.staff.label_tag }}
+                    {{ form.staff }}
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+

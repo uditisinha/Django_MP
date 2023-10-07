@@ -1,0 +1,137 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<head>
+    <style>
+
+        .authorized_users_list{
+            margin-left: 25vh;
+            margin-top: 5vh;
+            padding-bottom: 5vh;
+            position: absolute;
+            transform: translateX(5%);
+        }
+        
+        .user{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 150vh;
+            height: 10vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .user:nth-of-type(even) {
+            background-color: #FEE2E2;
+        }
+
+        .user:nth-of-type(odd) {
+            background-color: white;
+        }
+
+        .user_row h1{
+            font-size: 2.5vh;
+        }
+
+        hr{
+            border: none;
+            border-top: 0.1vh solid black;
+            margin: 0;
+            width: 150vh;
+        }
+
+        .add_user{
+            padding: 2vh;
+            border-radius: 2vh;
+            background-color: #B7202E;
+            color: white;
+            width: 15vh;
+            border-width: 0.1vh;
+            font-size: 2vh;
+        }
+
+        .add_user:hover{
+            background-color: #821925;
+        }
+        
+        .add_user_form input[type = "email"] {
+            padding: 2vh;
+            font-size: 2.5vh;
+            border-radius: 3vh;
+            border-width: 0.1vh;
+            width: 51vh;
+            border-style: solid;
+            border-color: #B7202E;
+        }
+
+        .add_user_form input:hover{
+            outline: none;
+            border-color: #B7202E;
+            box-shadow: 0 0 0.5vh #B7202E;
+        }
+
+        .add_user_form{
+            margin-top: 20vh;
+            text-align: center;
+        }
+
+        .add_user_form label {
+            font-size: 2.5vh;
+        }
+
+        .success{
+            color: green;
+            transform: translateY(60%);
+        }
+
+        .error{
+            border-color: #B7202E;
+        }
+
+        .errorlist{
+            color: #B7202E;
+        }
+
+    </style>
+</head>
+
+<div class = "content">
+    
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div {% if message.tags %} class = "{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <form method = "POST" class = "add_user_form">
+        {% csrf_token %}
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {{ form.email.errors }}
+        <button class = "add_user">Add User</button>
+    </form>
+    <p style = "text-align: center; font-size: 2.5vh; color: rgb(92, 91, 91);">
+        Please note that only the following users are authorized to sign up for this website.
+        <br>Ensure that the provided email addresses are accurate when adding new users.
+    </p>
+
+    <div class = "authorized_users_list">
+    <hr>
+    {% for user in users %}
+    <div class = "user">
+        <div class = "user_row">
+            <h1>{{user.email}}</h1>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+
+
+
+</div>
+{% endblock %}

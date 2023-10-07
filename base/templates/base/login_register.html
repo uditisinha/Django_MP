@@ -1,0 +1,427 @@
+<head>
+
+    <style>
+
+        .registermaindiv{
+            width: 80vh;
+            margin: auto;
+            margin-top: 5vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex: 2;
+            align-items: stretch; 
+            margin-bottom: 10vh;
+        }
+        
+        .rightregister{
+            background-color: #FEE2E2;
+            flex: 1;
+            padding: 5vh;
+            padding-bottom: 1vh;
+            border-radius: 2vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            box-shadow: 0px 0px 20vh rgba(0, 0, 0, 0.603);
+        }
+
+        .submit_login{
+            background-color: #B7202E;
+            color: white;
+            padding: 1vh;
+            border-radius: 2vh;
+            border-width: 0.2vh;
+            width: 70vh;
+            height: 7vh;
+            font-size: 2.5vh;
+            margin-top: 5vh;
+        }
+
+        .submit_login:hover{
+            background-color: #821925;
+        }
+
+        .login_redirect_button{
+            text-decoration: none;
+            font-size: 3vh;
+            color: blueviolet;
+        }
+
+        .login_redirect_button:hover{
+            text-decoration: underline;
+        }
+
+        .loginmaindiv{
+            width: 70vh;
+            margin: auto;
+            background-color: #FEE2E2;
+            padding: 5vh;
+            padding-bottom: 2vh;
+            border-radius: 2vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px 0px 20vh rgba(0, 0, 0, 0.603);
+        }
+
+        .logindetails{
+            padding: 3vh;
+            border-width: 0.3vh;
+            border-color: #B7202E;
+            border-radius: 5vh;
+            width: 70vh;
+            height: 9vh;
+            margin-bottom: 5vh;
+            font-size: 2.5vh;
+        }
+
+        .logindetails:hover{        
+            outline: none;
+            border-color: #B7202E;
+            box-shadow: 0 0 0.5vh #B7202E;
+        }
+
+        .redirect{
+            font-size: 3vh;
+            text-align: center;
+        }
+
+        .label_login{
+            font-size: 3vh;
+            margin-bottom: 1vh;
+            margin-left: 5vh;
+        }
+
+        .login_register_heading{
+            text-align: center;
+            font-size: 8vh;
+            margin-top: 7vh;
+            color: white;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        }
+
+        body{
+            background-image: url("../media/images/loggedout.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .field-container {
+            padding: 2vh;
+        }
+
+        .field-container label {
+            font-size: 2.5vh;
+            margin-left: 2vh;
+        }
+
+        .field-container input[type = "text"],
+        .field-container input[type = "email"],
+        .field-container input[type = "password"],
+        .field-container input[type = "number"],
+        .field-container select {
+            padding: 2vh;
+            font-size: 2.5vh;
+            border-radius: 3vh;
+            border-width: 0.1vh;
+            width: 51vh;
+            border-style: solid;
+            border-color: #B7202E;
+        }
+
+        .field-container input[type = "text"][name = "honorific"]{
+            width: 15vh;
+        }
+
+        .field-container input[type = "email"]{
+            width: 70vh;
+        }
+
+        .field-container input[type = "number"]{
+            width: 70vh;
+        }
+
+        .field-container select{
+            width: 33vh;
+        }
+
+        .field-container input[name = "position"]{
+            width: 33vh;
+        }
+
+        .field-container input[name = "username"]{
+            width: 70vh;
+        }
+
+        .field-container input[name = "password1"]{
+            width: 33vh;
+        }
+
+        .field-container input[name = "password2"]{
+            width: 33vh;
+        }
+
+        .full_name{
+            display: flex;
+        }
+
+        .row2{
+            display: flex;
+        }
+
+        .submit_register{
+            background-color: #B7202E;
+            color: white;
+            padding: 1vh;
+            border-radius: 2vh;
+            border-width: 0.2vh;
+            width: 70vh;
+            height: 7vh;
+            font-size: 2.5vh;
+            margin-left: 1.8vh;     
+            margin-top: 5vh;
+        }
+
+        .submit_register:hover{
+            background-color: #821925;
+        }
+
+        .redirect_login{
+            font-size: 2.5vh;
+            text-align: center;
+            margin-top: 5vh;
+        }
+
+        .field-container input[type="text"]::placeholder,
+        .field-container input[type="email"]::placeholder,
+        .field-container input[type="password"]::placeholder,
+        .field-container input[type="number"]::placeholder,
+        .field-container select::placeholder {
+            font-size: 2vh;
+        }
+
+        .field-container input:hover,
+        .field-container select:hover{ 
+            outline: none;
+            border-color: #B7202E;
+            box-shadow: 0 0 0.5vh #B7202E;
+        }
+
+        .forgot_password{
+            margin-top: 0;
+            text-decoration: none;
+            text-align: right;
+            margin-right: 2vh;
+            color: black;
+            font-size: 2.5vh;
+        }
+
+        .forgot_password:hover{
+            text-decoration: underline;
+        }
+
+        .password_fields{
+            display: flex;
+        }
+
+
+        .messages {
+                position: fixed;
+                z-index: 9999;
+                border-radius: 0.5vh;
+                padding: 1vh;
+                font-size: 2.5vh;
+                border-style: solid;
+                border-width: 0.2vh;
+                width: 60vh;
+                height: 6vh;
+                text-align: center;
+                background-color: #d4e3f4;
+                top: 10vh;
+                left: 50%;
+                transform: translateX(-50%);
+                animation: fadeOut 3s ease-out forwards;
+                box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);
+            }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+
+
+    </style>
+
+</head>
+
+{% if page == 'login' %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div {% if message.tags %} class = "{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method = "POST">
+
+    {% csrf_token %}
+
+    <h1 class = "login_register_heading">Login</h1>
+    <div class = "loginmaindiv">
+
+            <label class = "label_login">Email:</label>
+            <input type = "text" name = "email" class = "logindetails" placeholder = "example@gmail.com"/>
+            
+            <label class = "label_login">Password:</label>
+            <input type = "password" name = "password" class = "logindetails" placeholder = "password123" style = "margin-bottom: 1vh;"/>
+
+            <a href = "{% url 'forgot_password' %}" class = "forgot_password">Forgot Password?</a>
+            <input type="submit" value = "Login" class = "submit_login">
+
+            <p class = "redirect">Don't have an account?<a href="{% url 'register' %}" class = "login_redirect_button">
+                Sign up
+            </a></p>
+            
+    </div>  
+</form>
+
+
+{% else %}
+
+<style>
+    .messages {
+                position: fixed;
+                z-index: 9999;
+                border-radius: 0.5vh;
+                padding: 1vh;
+                font-size: 2.5vh;
+                border-style: solid;
+                border-width: 0.2vh;
+                width: 60vh;
+                height: 6vh;
+                text-align: center;
+                background-color: #d4e3f4;
+                top: 5vh;
+                left: 50%;
+                transform: translateX(-50%);
+                animation: fadeOut 3s ease-out forwards;
+                box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);
+            }
+
+        .errorlist{
+            color: #B7202E;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+</style>
+
+
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div {% if message.tags %} class = "{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+    <div class = "login_register_heading">Sign Up</div>
+    <form method = "POST">
+        
+        {% csrf_token %}
+        <div class = "registermaindiv">
+        <div class = "leftregister"></div>
+
+        <div class = "rightregister">
+        <div class="form-wrapper">     
+        
+        <div class = "full_name">
+            <div class="field-container">
+                <label for="{{ form.honorific.id_for_label }}">Honorific:</label><br>
+                {{ form.honorific }}
+                <p class="error-message">{{ form.honorific.errors }}</p>
+            </div>
+            <div class="field-container">
+                <label for="{{ form.pname.id_for_label }}">Full name:</label><br>
+                {{ form.pname }}
+                <p class="error-message">{{ form.pname.errors }}</p>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <label for="{{ form.email.id_for_label }}">Email:</label><br>
+            {{ form.email }}
+            <p class="error-message">{{ form.email.errors }}</p>
+        </div>
+        <div class="field-container">
+            <label for="{{ form.number.id_for_label }}">Number:</label><br>
+            {{ form.number }}            
+            <p class="error-message">{{ form.number.errors }}</p>
+        </div>
+        
+        <div class = "row2">
+            <div class="field-container">
+                <label for="{{ form.department.id_for_label }}">Department:</label><br>
+                {{ form.department }}
+            </div>
+            <div class="field-container">
+                <label for="{{ form.position.id_for_label }}">Position:</label><br>
+                {{ form.position }}
+            </div>
+        </div>
+
+            <div class="field-container">
+                <label for="{{ form.username.id_for_label }}">Username:</label><br>
+                {{ form.username }}
+                <p class="error-message">{{ form.username.errors }}</p>
+            </div>
+
+            
+            <div class = "password_fields">
+            <div class="field-container">
+                <label for="{{ form.password1.id_for_label }}">Password:</label><br>
+                {{ form.password1 }}
+            </div>
+            <div class="field-container">
+                <label for="{{ form.password2.id_for_label }}">Confirm Password:</label><br>
+                {{ form.password2 }}
+            </div>
+            </div>
+            <button class="submit_register">Register</button>
+
+            <p class = "redirect_login">Already signed up?<a href = "/" class = "login_redirect_button">
+                Log in
+            </a></p>
+
+        </div>
+    </div>
+    </form>
+</div>
+
+{% endif %}

@@ -1,0 +1,203 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+
+    .edit_profile_body{
+        margin: auto;
+        margin-top: 18vh;
+        margin-bottom: 10vh;
+        width: 70vh;
+        background-color: #FEE2E2;
+        border-radius: 2vh;
+        border-style: solid;
+        border-width: 0.2vh;
+        border-color: black;
+        padding: 5vh;
+        box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);
+    }
+
+    .submit_profile_edit{
+        padding: 1vh;
+        background-color: #B7202E;
+        border-radius: 1vh;
+        border-width: 0.2vh;
+        color: white;
+        font-size: 2vh;
+        width: 15vh;
+        height: 6vh;
+    }
+
+    .submit_profile_edit:hover{
+        background-color: #821925;
+    }
+    .field-container {
+            padding: 2vh;
+        }
+
+        .field-container label {
+            font-size: 2.5vh;
+            margin-left: 2vh;
+        }
+
+        .field-container input[type = "text"],
+        .field-container input[type = "number"],
+        .field-container select {
+            padding: 2vh;
+            font-size: 2.5vh;
+            border-radius: 3vh;
+            border-width: 0.1vh;
+            width: 40vh;
+            border-style: solid;
+            border-color: #B7202E;
+            margin-top: 0.5vh;
+        }
+
+        .field-container input:hover,
+        .field-container select:hover{
+            outline: none;
+            border-color: #B7202E;
+            box-shadow: 0 0 0.5vh #B7202E;
+        }
+
+
+        .field-container input[type = "text"][name = "honorific"]{
+            width: 15vh;
+        }
+
+        .field-container input[type = "number"]{
+            width: 63vh;
+        }
+
+        .field-container select{
+            width: 29.5vh;
+        }
+
+        .field-container input[name = "position"]{
+            width: 29.5vh;
+        }
+        
+        .full_name{
+            display: flex;
+        }
+
+        .row2{
+            display: flex;
+            padding: 0;
+            height: fit-content;
+        }
+
+        .submit_profile_edit{
+            background-color: #B7202E;
+            color: white;
+            padding: 1vh;
+            border-radius: 2vh;
+            border-width: 0.2vh;
+            width: 33vh;
+            height: 7vh;
+            font-size: 2.5vh;  
+            margin-top: 5vh;
+        }
+
+        .cancel_profile_edit{
+            margin-left: 43vh;
+            text-decoration: none;
+            color: black;
+        }
+
+        .cancel_profile_edit:hover{
+            text-decoration: underline;
+        }
+
+        .field-container input[type="text"]::placeholder,
+        .field-container input[type="number"]::placeholder,
+        .field-container select::placeholder {
+            font-size: 2vh;
+        }
+
+        .password_profile_edit{
+            border-style: 0.2vh;
+            border-color: #B7202E;
+            background-color: #eae9e9;
+            padding: 1vh;
+            border-radius: 2vh;
+            border-width: 0.2vh;
+            width: 33vh;
+            height: 7vh;
+            margin-right: 3vh;
+            font-size: 2.5vh;  
+            margin-top: 5vh;
+            color: black;
+        }
+
+        .password_profile_edit:hover{
+            background-color: #D9D9D9;
+        }
+
+        .submit_buttons{
+            display: flex;
+        }
+
+</style>
+
+<div class = "content">
+    
+<div class="edit_profile_body">  
+
+<h1 style = "font-size: 6vh; text-align: center; margin-bottom: 3vh; margin-top: 0;">Edit Profile</h1>
+
+<form method = "POST" enctype = "multipart/form-data">
+
+        {% csrf_token %}
+
+        
+        <div class="field-container">
+            <label for="{{ form.avatar.id_for_label }}">Profile Photo:</label><br>
+            {{ form.avatar }}
+        </div>
+        
+        <div class = "full_name">
+            <div class="field-container">
+                <label for="{{ form.honorific.id_for_label }}">Honorific:</label><br>
+                {{ form.honorific }}
+            </div>
+            <div class="field-container">
+                <label for="{{ form.pname.id_for_label }}">Full name:</label><br>
+                {{ form.pname }}
+            </div>
+        </div>
+
+        <div class="field-container">
+            <label for="{{ form.number.id_for_label }}">Number:</label><br>
+            {{ form.number }}
+        </div>
+        
+        <div class = "row2">
+            <div class="field-container">
+                <label for="{{ form.department.id_for_label }}">Department:</label><br>
+                {{ form.department }}
+            </div>
+            <div class="field-container">
+                <label for="{{ form.position.id_for_label }}">Position:</label><br>
+                {{ form.position }}
+            </div>
+        </div>
+
+        
+    <a href = "{{ request.META.HTTP_REFERER }}" class = "cancel_profile_edit"><- Go back to Profile</a>
+
+    
+    <div class = "submit_buttons">
+    <form method = "POST">
+        {% csrf_token %}
+        <button type = "submit" name = "Change Password" class = "password_profile_edit">Change Password</button>
+    </form>
+
+    <button name = "submit" class = "submit_profile_edit">Confirm</button>
+
+    </div>
+    </form>
+
+</div>
+
+{% endblock content %}

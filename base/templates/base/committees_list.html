@@ -1,0 +1,211 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<head>
+
+    <style>
+        .list{
+            width: 175vh;
+            margin: auto;
+            margin-top: 15vh;
+            margin-bottom: 10vh;
+        }
+
+        .committees{
+            display: flex;
+            font-size: 3vh;
+            text-align: left;
+            height: 11vh;
+        }
+
+        .committees:nth-of-type(even) {
+            background-color: #FEE2E2;
+        }
+
+        .committees:nth-of-type(odd) {
+            background-color: white;
+        }
+
+        .name{
+            margin-left: 3vh;
+            width: 70vh;
+            overflow: hidden;
+            height: 7.3vh;
+        }
+        .convener{
+            margin-left: 24vh;
+            width: 58vh;
+            margin-top: 4vh;
+        }
+        .level{
+            width: 10vh;
+        }
+
+        .topic{
+            display: flex;
+            margin-left: 10vh;
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+        }
+
+        h2{
+            font-size: 3vh;
+            padding-left: 15vh;
+        }
+
+        hr{
+            border: none;
+            border-top: 0.1vh solid black;
+            margin: 0;
+        }
+
+        h1{
+            text-align: center;
+            font-size: 8vh;
+        }
+
+        .link_committee{
+            color: #B7202E;
+            text-decoration: none;
+            font-size: 2.5vh;
+        }
+
+        .link_committee:hover{
+            color: #570a13;
+        }
+
+        .add_committees{
+            font-size: 2vh;
+            padding: 2vh;
+            background-color: #B7202E;
+            color: white;
+            border-radius: 1vh;
+            width: 20vh;
+            border-width: 0.1vh;
+            margin-top: 5vh;
+            margin-bottom: 5vh;
+        }
+        
+        .add_committees:hover{
+            background-color: #821925;
+        }
+        
+        .add_button{
+            display: flex;
+            justify-content: center;
+        }
+
+        .convener_name {
+            color: black;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .convener_name:hover{
+            color: rgb(117, 111, 111);
+        }
+
+        .searchbardiv {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 2vh;
+            margin-top: 0;
+            padding-right: 15vh;
+            width: 173vh;
+        }
+
+        .searchbar {
+            padding: 2vh;
+            border-width: 0.3vh;
+            border-color: #B7202E;
+            border-radius: 3vh;
+            font-size: 2.5vh;
+            width: 35vh;
+            margin-left: auto;
+        }
+
+        .searchbar:hover{
+            outline: none;
+            border-color: #B7202E;
+            box-shadow: 0 0 0.8vh #B7202E;
+        }
+
+        
+        .error{
+            transform: translateY(60%);
+            color: #821925;
+        }
+
+        .success{
+            transform: translateY(60%);
+            color: green;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div {% if message.tags %} class = "{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+<div class = "content">
+<div class = "list">
+<h1>Committees List</h1>
+
+<form method = "GET" action = "" class = "searchbardiv">
+    <input type = "test" name = "q" placeholder = "Search committee... " class = "searchbar"/>
+</form>
+
+    <hr>
+    <div class = "topic">
+        <h2>Name</h2>
+        <h2 style = "margin-left: 49vh;">Convener(s)</h2>
+        <h2 style = "margin-left: 29vh;">Level</h2>
+    </div>
+
+{% for committee in selected_committees %}
+    <hr>
+    <div class = "committees">
+            <div class = "name">
+                <h5><a href = "{% url 'committee' committee.id %}" class = "link_committee">
+                    {{committee.name}}
+                </a></h5>
+            </div>
+
+            <div class = "convener">
+                <a href = "{% url 'profile' committee.convener.id %}" class = "convener_name">{{committee.convener.pname}}
+                </a>
+            </div>
+            
+            <div class = "level">
+                <h5>{{committee.level}}</h5>
+            </div>
+    </div>
+
+{% endfor %}
+
+    <hr>
+</div>
+
+{% if request.user.is_superuser %}
+    <div class = "add_button">
+        <a href = "{% url 'create_committee' %}">
+            <input type = button value = 'Add Committee' class = "add_committees">
+        </a>
+    </div>
+{% endif %}
+
+</div>
+</body>
+
+{% endblock %}

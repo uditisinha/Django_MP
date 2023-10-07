@@ -1,0 +1,135 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class = "content">
+
+    <style>
+    
+    body{
+        margin: 0;
+    }
+
+    .file_display{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-top: 2vh;
+        margin-left: 4vh;
+        margin-bottom: 10vh;
+      }
+
+      .file_card {
+        width: 58vh; 
+        height: 30vh;
+        border-radius: 1vh;
+        border-style: solid;
+        border-width: 0.2vh;
+        border-color: black;
+        display: flex;
+        flex-direction: column;
+        padding: 2vh;
+        padding-bottom: 0.5vh;
+        margin-top: 3vh;
+        margin-right: 2vh;
+      }
+
+      
+      .file_card:nth-of-type(odd) {
+        background-color: #FEE2E2;
+      }
+
+      .file_card:nth-of-type(even) {
+        background-color: #D9D9D9;
+      }
+
+      .name_file{
+        text-decoration: none;
+        color: black;
+        font-size: 2.5vh;
+        word-wrap: break-word;
+        overflow: hidden;
+        overflow-y: scroll;
+        height: 13vh;
+      }      
+      
+      .name_file::-webkit-scrollbar {
+        width: 0.5vh;
+      }
+
+      .name_file::-webkit-scrollbar-thumb {
+        background-color: #878787; 
+        border-radius: 1vh; 
+      }
+
+      .delete_file{
+        text-decoration: none;
+        color: #B7202E;
+        font-size: 2vh;
+        margin-top: 0;
+        width: 15vh;
+        margin-bottom: 1vh;
+      }
+
+      .delete_file:hover{
+        color: #480e15;
+        text-decoration: underline;
+      }
+
+      .card_content{
+        height: 15vh;
+        margin-top: auto;
+      }
+
+      .path{
+        padding: 0;
+        margin: 0;
+        font-size: 2vh;
+        word-break: break-all;
+        padding-bottom: 1vh;
+        overflow: hidden;
+      }
+
+      .location{
+        display: flex
+      }
+
+      label{
+        margin: 0;
+        padding: 0;
+      }
+
+    </style>
+
+<h1 style = "font-size: 6vh; text-align: center; margin-top: 15vh;">Search results</h1>
+
+<div class="file_display">
+    {% for f in files_context %}
+  <div class = "file_card">
+    <a class = "name_file" href="{{f.1}}">{{f.0.name}}</a>
+
+    
+  <hr style = "border-top: 0.2vh solid #4d4c4c; width: 40vh; margin-left: 10vh; margin-top: 2vh;">
+
+<div class = "card_content">
+    <div class = "location">
+        <label style = "font-size: 2.5vh;">Committee:</label>
+        <p class = "path">{{f.0.committee}}</p>
+    </div>
+
+    <div class = "location">
+        <label style = "font-size: 2.5vh;">Path:</label>
+        <p class = "path">{{f.1}}</p>
+    </div>
+</div>
+
+  {% if f.2 %}
+    <a class = "delete_file" href="{% url 'deletefile' f.0.id|urlencode%}">Delete</a>
+  {% endif %}
+  </div>
+  <br>
+  {% endfor %}  
+  </div>
+
+
+</div>
+{% endblock content %}
