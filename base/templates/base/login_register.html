@@ -122,7 +122,6 @@
         .field-container input[type = "text"],
         .field-container input[type = "email"],
         .field-container input[type = "password"],
-        .field-container input[type = "number"],
         .field-container select {
             padding: 2vh;
             font-size: 2.5vh;
@@ -138,10 +137,6 @@
         }
 
         .field-container input[type = "email"]{
-            width: 70vh;
-        }
-
-        .field-container input[type = "number"]{
             width: 70vh;
         }
 
@@ -199,7 +194,6 @@
         .field-container input[type="text"]::placeholder,
         .field-container input[type="email"]::placeholder,
         .field-container input[type="password"]::placeholder,
-        .field-container input[type="number"]::placeholder,
         .field-container select::placeholder {
             font-size: 2vh;
         }
@@ -363,11 +357,6 @@
         
         <div class = "full_name">
             <div class="field-container">
-                <label for="{{ form.honorific.id_for_label }}">Honorific:</label><br>
-                {{ form.honorific }}
-                <p class="error-message">{{ form.honorific.errors }}</p>
-            </div>
-            <div class="field-container">
                 <label for="{{ form.pname.id_for_label }}">Full name:</label><br>
                 {{ form.pname }}
                 <p class="error-message">{{ form.pname.errors }}</p>
@@ -379,20 +368,15 @@
             {{ form.email }}
             <p class="error-message">{{ form.email.errors }}</p>
         </div>
-        <div class="field-container">
-            <label for="{{ form.number.id_for_label }}">Number:</label><br>
-            {{ form.number }}            
-            <p class="error-message">{{ form.number.errors }}</p>
-        </div>
         
         <div class = "row2">
             <div class="field-container">
-                <label for="{{ form.department.id_for_label }}">Department:</label><br>
-                {{ form.department }}
+                <label for="{{ form.department.id_for_label }}">Branch:</label><br>
+                {{ form.branch }}
             </div>
             <div class="field-container">
-                <label for="{{ form.position.id_for_label }}">Position:</label><br>
-                {{ form.position }}
+                <label for="{{ form.position.id_for_label }}">Year:</label><br>
+                {{ form.year }}
             </div>
         </div>
 

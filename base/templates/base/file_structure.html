@@ -215,7 +215,7 @@
         <h1 style = "text-align: center; margin-top: 19vh; font-size: 6vh;">Your committee directories</h1>
         <div class = "committees_directory">
           {% for dir in files %}
-            {% if dir in committee_names %}
+            {% if dir in subject_names %}
                 <div class = "directory_row">
                   <div class = "directory_row_inner">
                     <a href="{{current_url}}{{dir}}/" class = "dir_links">{{dir}}</a>
@@ -707,7 +707,7 @@
 
           <div class = "form-group">
             {{form2.file}}
-            {{form2.committee}}
+            {{form2.subject}}
           </div>
 
           <input type = "hidden" name = "directory" value = "{{directory}}">

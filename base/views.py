@@ -5,7 +5,7 @@ import time
 # from mimetypes import guess_type
 from django.http import HttpResponse,FileResponse
 from .models import User, Subjects, Folder, File
-from .forms import MyUserCreationForm, LoginForm, UserForm, CommitteeForm
+from .forms import MyUserCreationForm, LoginForm, UserForm, SubjectForm
 from django.db.models import Q
 from django.conf import settings
 from django.contrib import messages
@@ -25,7 +25,7 @@ def home(request):
         user = request.user
         subject_list = list(
             Subjects.objects.exclude(
-                ~Q(convener = user) & ~Q(members = user) & ~Q(staff = user)
+                ~Q(editors = user) & ~Q(members = user)
             )
         )
         context = {
@@ -38,20 +38,20 @@ def home(request):
 
 
 @login_required(login_url = 'login')
-def Subjects_list(request): 
+def subjects_list(request): 
 
     if request.GET.get('q') != None:
         q = request.GET.get('q')
     else:
         q = ''
 
-    selected_Subjects = Subjects.objects.filter(
+    selected_subjects = Subjects.objects.filter(
         Q(name__icontains = q)
     )
 
-    Subjects = Subjects.objects.all()
-    context = {'Subjects': Subjects, 'selected_Subjects': selected_Subjects}
-    return render(request, 'base/Subjects_list.html', context)
+    subjects = Subjects.objects.all()
+    context = {'subjects': subjects, 'selected_subjects': selected_subjects}
+    return render(request, 'base/subjects_list.html', context)
 
 def loginuser(request):
     page = 'login'
@@ -65,6 +65,8 @@ def loginuser(request):
             email = request.POST.get('email')
             password = request.POST.get('password')
 
+            user_email = request.POST.get('email')
+
             #checks whether user exists
             try:
                 email = User.objects.get(email = email)
@@ -72,20 +74,22 @@ def loginuser(request):
                 messages.error(request, 'User does not exist.')
 
             #checks for the user with given mail and password
-            user = authenticate(request, email = email, password = password)
+            user = authenticate(request, email = user_email, password = password)
             
             if user != None:
+                print('aa gaya!!!')
                 if user.is_verified:
+                    if user.is_superuser:
+                        login(request,user)
+                        messages.success(request,'Login Successful, Welcome Admin!')
+                        return redirect('home')
                     login(request,user)
                     messages.success(request, 'Login Successful!')
-                    return redirect('home')
-                elif user.is_superuser:
-                    login(request,user)
-                    messages.success(request,'Login Successful, Welcome Admin!')
                     return redirect('home')
                 else:
                     messages.error(request, 'Please verify your email.')
             else:
+                print('bc nahi aara')
                 messages.error(request,'Incorrect Password.')
 
     context={
@@ -289,7 +293,7 @@ def profile(request,pk):
     user = User.objects.get(id=pk)
     Subjects =  list(
         Subjects.objects.exclude(
-                ~Q(convener = user) & ~Q(members = user) & ~Q(staff = user)
+                ~Q(editors = user) & ~Q(members = user)
             ))
     
     context={
@@ -299,57 +303,57 @@ def profile(request,pk):
     return render(request,'base/profile.html',context)
 
 @login_required(login_url = 'login')
-def comms(request, pk):
-    committee = Subjects.objects.get(id = pk)
-    path = str(settings.MEDIA_ROOT) + '/files/' + committee.name + '/'
+def subs(request, pk):
+    subject = Subjects.objects.get(id = pk)
+    path = str(settings.MEDIA_ROOT) + '/files/' + subject.name + '/'
     files = []
     for item in os.listdir(path):
         item_path = os.path.join(path, item)
         if os.path.isdir(item_path):
-            item_url = str(settings.MEDIA_URL) + 'files/' + committee.name + '/' + item + '/'
+            item_url = str(settings.MEDIA_URL) + 'files/' + subject.name + '/' + item + '/'
             files.append([item,item_url])
-    print(files)
-    context = {'committee': committee,'folders':files}
-    return render(request, 'base/comms.html', context)
+    context = {'subject': subject,'folders':files}
+    return render(request, 'base/subs.html', context)
 
 
 @login_required(login_url = 'login')
-def delete_committee(request, pk):
-    committee = Subjects.objects.get(id = pk)
+def delete_subject(request, pk):
+    subject = Subjects.objects.get(id = pk)
 
-    if request.user != committee.convener:
-        return HttpResponse('Only the committee\'s convener can delete the committee.')
+    if not request.user.is_superuser:
+        return HttpResponse('Only the admin can delete the subject.')
     
     if request.method == "POST":
-        committee.delete()
-        return redirect('committees_list')
+        subject.delete()
+        return redirect('subject_list')
     
-    context = {'obj': committee}
+    context = {'obj': subject}
     return render(request, 'base/delete.html', context)
 
 
 @login_required(login_url='login')
-def create_committee(request):
+def create_subject(request):
     if request.method == "POST":
-        form = CommitteeForm(request.POST)
+        form = SubjectForm(request.POST)
         if form.is_valid():
-            committee = form.save(commit=False)
-            folder_name = committee.name
+            subject = form.save(commit=False)
+            folder_name = subject.name
             path = str(settings.MEDIA_ROOT) + '\\files/' + f'{folder_name}/'
             os.makedirs(path)
+            print('idhar issue hua')
             new_folder = Folder()
             new_folder.name = folder_name
             new_folder.parent_directory = path
             new_folder.save() 
-            committee.save()
+            subject.save()
             form.save_m2m()  # Save the many-to-many relationships
-            messages.success(request, "Committee added successfully!")
-            return redirect('Subjects_list')
+            messages.success(request, "Subject added successfully!")
+            return redirect('subjects_list')
     else:
-        form = CommitteeForm()
+        form = SubjectForm()
     
     context = {'form': form}
-    return render(request, 'base/add_committee.html', context)
+    return render(request, 'base/add_subject.html', context)
 
 @login_required(login_url = 'login')
 def filesview(request,path='',filename=''):
@@ -381,18 +385,18 @@ def search_files(request):
     else:
         q = ''
     user = request.user
-    Subjects = Subjects.objects.filter(members=user) | Subjects.objects.filter(convener=user) | Subjects.objects.filter(staff=user)
+    Subjects = Subjects.objects.filter(members=user) | Subjects.objects.filter(editors=user)
     filtered_files = File.objects.filter(
-        (Q(name__icontains = q) | Q(keywords__icontains = q) | Q(committee__name__icontains = q))
+        (Q(name__icontains = q) | Q(keywords__icontains = q) | Q(subject__name__icontains = q))
     )
-    committee_list=[]
+    subject_list=[]
     for c in Subjects:
-        committee_list.append(c.name)
+        subject_list.append(c.name)
     bool_list=[]
     search_file_paths=[]
     for file in filtered_files:
         search_file_paths.append(str(settings.MEDIA_URL) + str(file.file))
-        if str(file.committee) in committee_list:
+        if str(file.subject) in subject_list:
             bool_list.append(True)
         else:
             bool_list.append(False)
@@ -401,7 +405,7 @@ def search_files(request):
     for i in range(len(filtered_files)):
         files_context.append([filtered_files[i],search_file_paths[i],bool_list[i]])
     context={
-        'Subjects':committee_list,
+        'Subjects':subject_list,
         'files_context':files_context,
         'search_files':filtered_files,
         'search_file_paths':search_file_paths,
@@ -414,24 +418,24 @@ def filestructure(request,path=''):
         q = request.GET.get('q')
     else:
         q = ''
-    committee_id = None
+    subject_id = None
     flag=0
     flag2=0
     user = request.user
-    committee_names=[]
-    user_Subjects = Subjects.objects.filter(members=user) | Subjects.objects.filter(convener=user) | Subjects.objects.filter(staff=user)
+    subject_names=[]
+    user_Subjects = Subjects.objects.filter(members=user) | Subjects.objects.filter(editors=user)
     if user.is_superuser:
         user_Subjects = Subjects.objects.all()
     for names in user_Subjects:
-        committee_names.append(names.name)
+        subject_names.append(names.name)
     current_url = request.build_absolute_uri()
     base_url = request.build_absolute_uri('/')
     media_url = settings.MEDIA_URL[1:] # Get the base URL with protocol and domain
     files_url = base_url + media_url + 'files/' # Combine base URL with MEDIA_URL
-    for committee in committee_names:
-       url = files_url+committee
+    for subject in subject_names:
+       url = files_url+subject
        if (url in unquote(current_url)):
-           committee_id = Subjects.objects.get(name=committee)
+           subject_id = Subjects.objects.get(name=subject)
            flag=1 
     if (flag==0 and current_url!=files_url):
         flag2=1
@@ -463,7 +467,7 @@ def filestructure(request,path=''):
     if q!='':
         current_url = current_url.rsplit("?q",1)[0]
         files_to_access = File.objects.filter(
-        Q(name__icontains = q) | Q(keywords__icontains = q) | Q(committee__name__icontains = q),id__in = files_to_access)
+        Q(name__icontains = q) | Q(keywords__icontains = q) | Q(subject__name__icontains = q),id__in = files_to_access)
     file_paths = []
     file_extensions = []
     i=0
@@ -480,8 +484,8 @@ def filestructure(request,path=''):
         # else:
         #     files.append(f'File: {item}')
     form = FolderForm()
-    if committee_id is not None:
-        form2 = FileForm(committee_id = committee_id)
+    if subject_id is not None:
+        form2 = FileForm(subject_id = subject_id)
     else:
         form2=FileForm()
     if request.method == "POST" and 'first_post' in request.POST.keys():
@@ -542,6 +546,6 @@ def filestructure(request,path=''):
         'file_paths':file_paths,
         'current_url':current_url,
         'back_url':back_url,
-        'committee_names':committee_names,
+        'subject_names':subject_names,
     }
     return render(request,'base/file_structure.html',context)

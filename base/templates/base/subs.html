@@ -1,0 +1,168 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<html>
+
+    <head>
+
+        <style>
+
+            .committee_topic{
+                font-size: 7vh;
+                margin-top: 20vh;
+                text-align: center;
+                word-wrap: break-word;
+            }
+
+            .committee_body{
+                margin-left: 8vh;
+                display: flex;
+            }
+
+            hr {
+                width: 23vh;
+                text-align: left;
+                margin: 0;
+                border: none;
+                border-top: 0.1vh solid #B7202E;
+            }
+
+            .left_committee h2{
+                text-align: center;
+                font-size: 2.8vh;
+            }
+
+            .left_committee h3{
+                color: #949494;
+                font-size: 3.5vh;
+                text-align: center;
+                margin-bottom: 2vh;
+            }
+
+            .left_committee{
+                width: 23vh;
+            }
+
+            .right_committee{
+                margin-left: 10vh;
+                margin-right: 15vh;
+            }
+            
+            .committee_body h5{
+                color: #949494;
+                font-size: 4vh;
+                margin: 10vh 0 1vh 0;
+            }
+
+            .committee_body p{
+                margin-top: 0;
+                font-size: 3vh;
+                margin-bottom: 0.5vh;
+            }
+
+            .edit_button{
+                display: flex;
+                justify-content: center;
+            }
+
+            .edit_committees{
+                font-size: 2vh;
+                padding: 2vh;
+                background-color: #B7202E;
+                color: white;
+                border-radius: 1vh;
+                width: 15vh;
+                border-width: 0.1vh;
+                margin-top: 5vh;
+                margin-bottom: 5vh;
+                margin-right: 3vh;
+            }
+
+            .edit_committees:hover{
+                background-color: #821925;
+            }
+
+            .redirect_folder_comms{
+                font-size: 2vh;
+                padding: 2vh;
+                background-color: #B7202E;
+                color: white;
+                border-radius: 1vh;
+                width: 15vh;
+                border-width: 0.1vh;
+                margin-top: 5vh;
+                margin-bottom: 5vh;
+                margin-left: 3vh;
+            }
+
+            .redirect_folder_comms:hover{
+                background-color: #821925;
+            }
+
+            .folder_link_comms{
+                text-decoration: none;
+                color: black;
+                word-wrap: break-word;
+            }
+
+            .folder_link_comms:hover{
+                color: rgb(117, 111, 111);
+            }
+
+            .committee_page_buttons{
+                display: flex;
+                justify-content: center;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class = "content">
+        <h1 class = "committee_topic">{{committee.name}}</h1>
+
+        <div class = "committee_body">
+
+            <div class = "left_committee">
+                <h3> Folders </h3>
+                {% for item in folders %}
+                <hr>
+                <h2><a href = "{{item.1}}" class = "folder_link_comms">{{item.0}}</a></h2>
+                {% endfor %}
+                <hr>
+            </div>
+            
+            <div class = "right_committee">
+                <h5>Convener</h5>
+                <p>{{committee.convener.pname}}</p>
+                <h5>Description</h5>
+                <p>{{committee.description}}</p>
+                <h5>Goals</h5>
+                <p>{{committee.goal}}</p>
+                <h5>Objectives</h5>
+                <p style = "margin-bottom: 10vh">{{committee.objective}}</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class = "committee_page_buttons">
+    {% if request.user.id == committee.convener.id or request.user.is_superuser %}
+    <div class="edit_button">
+        <a href="{% url 'edit_committee' committee.id %}">
+            <input type="button" value="Edit" class="edit_committees">
+        </a>
+    </div>
+    {% endif %}
+        <a href = "/media/files/{{committee}}/"><button class = "redirect_folder_comms">Show folder</button></a>
+    </div>
+
+    </body>
+
+</html>
+
+{% endblock %}
+

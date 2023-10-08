@@ -4,16 +4,14 @@ from . import views
 
 
 urlpatterns=[
-    path('committees/', views.committees_list, name='committees_list'),
+    path('subjects/', views.subjects_list, name='subjects_list'),
     path('forgot_password/', views.forgot_password, name = 'forgot_password'),
     path('change_password/<token>', views.change_password, name = 'change_password'),
     path('', views.loginuser, name = 'login'),
-    path('committee/<str:pk>/', views.comms, name = 'committee'),
-    path('users_allowed/', views.users_allowed, name = 'users_allowed'),
-    path('create_committee/', views.create_committee, name = 'create_committee'),
+    path('subject/<str:pk>/', views.subs, name = 'subject'),
+    path('create_subject/', views.create_subject, name = 'create_subject'),
     path('edit_profile/<str:pk>/', views.edit_profile, name = 'edit_profile'),
-    path('edit_committee/<str:pk>/', views.edit_committee, name = 'edit_committee'),
-    path('delete_committee/<str:pk>/', views.delete_committee, name = 'delete_committee'),
+    path('delete_subject/<str:pk>/', views.delete_subject, name = 'delete_subject'),
     path('register/', views.registeruser, name = 'register'),
     path('verify/<auth_token>', views.verify, name = 'verify'),
     path('error/', views.error, name = 'error'),

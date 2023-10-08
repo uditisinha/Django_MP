@@ -11,7 +11,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class Year(models.Model):
-    year = models.IntegerField(null=False)
+    year = models.CharField(max_length=200, null=False)
+    subjects = models.ManyToManyField('Subjects', related_name='years', null=True, blank=True)
 
     def __str__(self):
         return self.year
@@ -20,11 +21,12 @@ class User(AbstractUser):
     avatar = models.ImageField(null=True, upload_to="images/", blank=True)
     pname = models.CharField(max_length=200, null=True)
     email = models.EmailField(unique=True, null=True)
-    year = models.IntegerField(Year, null=False)
+    year = models.ForeignKey(Year, on_delete=models.CASCADE, null=True)
     branch = models.ForeignKey('Branch', on_delete=models.SET_NULL, null=True)
-    is_verified = models.BooleanField(default=False)
-    auth_token = models.CharField(max_length=200)
-    password_token = models.CharField(max_length=200)
+    subjects = models.ManyToManyField('Subjects', related_name='user_subjects')
+    is_verified = models.BooleanField(default=False, null=True)
+    auth_token = models.CharField(max_length=200, null=True)
+    password_token = models.CharField(max_length=200, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['pname', 'username']
 
@@ -33,15 +35,18 @@ class User(AbstractUser):
 
 class Subjects(models.Model):
     name = models.CharField(max_length=200)
-    members = models.ManyToManyField(User, related_name='members', null=True, blank=True)
-    editors = models.ManyToManyField(User, related_name='editors', null=True, blank=True)
+    year = models.ManyToManyField(Year, related_name='subject_year')
+    branch = models.ManyToManyField('Branch', related_name='subject_branch')
+    description = models.TextField(max_length=1000, null=True)
+    members = models.ManyToManyField(User, related_name='subject_members', null=True, blank=True)
+    editors = models.ManyToManyField(User, related_name='subject_editors', null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 class Branch(models.Model):
     name = models.CharField(max_length=200)
-    subjects = models.ManyToManyField(Subjects, related_name='subjects', null=False)
+    subjects = models.ManyToManyField(Subjects, related_name='subjects', null=True, blank=True)
 
     def __str__(self):
         return self.name

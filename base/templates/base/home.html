@@ -44,6 +44,7 @@
 
         .top_image_home_text h3{
             font-size: 4vh;
+            font-style: italic;
             margin: 0;
             margin-bottom: 4vh;
         }
@@ -219,7 +220,7 @@
     <div class = "top_image_home">
         <div class = "top_image_home_text">
             <h1>Welcome {{user.pname}}</h1>
-            <h3>Find and manage all your documents and directories.</h3>
+            <h3>Find and manage all your course documents.</h3>
         </div>
     </div>
   
@@ -300,15 +301,15 @@
         }
 
         .committee_description_slider{
-            margin-top: 7vh;
-            height: 15vh;
+            margin-top: 4vh;
+            height: 23vh;
             overflow: hidden;
             overflow-y: scroll;
             font-size: 2.5vh;
-            text-align: center;
             margin-left: 18vh;
             margin-right: 18vh;
             padding: 2vh;
+            white-space: pre-line;
         }
 
         .committee_description_slider::-webkit-scrollbar {
@@ -381,43 +382,36 @@
     </style>
 
 <img src = "../media/images/committee.png" class = "committee_png">
-<h1 style = "font-size: 6vh; text-align: center;">Your committees</h1>
+<h1 style = "font-size: 6vh; text-align: center;">Your Subjects</h1>
     <div id = "carouselExampleIndicators" class = "carousel slide" style = "box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);">
         <div class = "carousel-indicators">
-            {% for committee in committee_list %}
+            {% for subject in subject_list %}
                 <button type = "button" data-bs-target = "#carouselExampleIndicators" data-bs-slide-to = "{{ forloop.counter0 }}" {% if forloop.first %} class="active"{% endif %} aria-label = "Slide {{ forloop.counter }}" style = "width: 5vh;">
                 </button>
             {% endfor %}
         </div>
               
         <div class = "carousel-inner">
-            {% for committee in committee_list %}
+            {% for subject in subject_list %}
             <div class = "carousel-item {% if forloop.first %}active{% endif %}">
-                <a href="{% url 'committee' committee.id %}"><h1 class="committee_name_slider">{{ committee }}</h1></a>
-                <h4 class = "committee_description_slider">{{committee.description}}</h4>
+                <a href="{% url 'subject' subject.id %}"><h1 class="committee_name_slider">{{ subject }}</h1></a>
+                <h4 class = "committee_description_slider">{{subject.description}}</h4>
                 
-              {% if user == committee.convener %}
+              {% if user in subject.editors.all %}
               <div class = "position_home">
                 <h4>Position:</h4>
-                <h1 class = "position_inner">Convener</h1>
+                <h1 class = "position_inner">Editor</h1>
               </div>
               {% endif %}
 
-              {% if user in committee.members.all %}
+              {% if user in subject.members.all %}
               <div class = "position_home">
                 <h4>Position:</h4>
-                <h1 class = "position_inner">Member</h1>
+                <h1 class = "position_inner">Viewer</h1>
               </div>
               {% endif %}
 
-              {% if user in committee.staff.all %}
-              <div class = "position_home">
-                <h4>Position:</h4>
-                <h1 class = "position_inner">Staff</h1>
-              </div>
-              {% endif %}
-
-            <a href = "/media/files/{{committee}}/"><button class = "redirect_folder">Show folder</button></a>
+            <a href = "/media/files/{{subject}}/"><button class = "redirect_folder">Show folder</button></a>
             </div>
             {% endfor %}
         </div>
