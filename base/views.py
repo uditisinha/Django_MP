@@ -40,13 +40,15 @@ def home(request):
 @login_required(login_url = 'login')
 def subjects_list(request): 
 
+    year = request.user.year
     if request.GET.get('q') != None:
-        q = request.GET.get('q')
+        q = request.GET.get('q', '')
     else:
         q = ''
 
     selected_subjects = Subjects.objects.filter(
-        Q(name__icontains = q)
+        Q(name__icontains = q),
+        year = year
     )
 
     subjects = Subjects.objects.all()
@@ -77,7 +79,6 @@ def loginuser(request):
             user = authenticate(request, email = user_email, password = password)
             
             if user != None:
-                print('aa gaya!!!')
                 if user.is_verified:
                     if user.is_superuser:
                         login(request,user)
@@ -89,7 +90,6 @@ def loginuser(request):
                 else:
                     messages.error(request, 'Please verify your email.')
             else:
-                print('bc nahi aara')
                 messages.error(request,'Incorrect Password.')
 
     context={
@@ -111,7 +111,8 @@ def forgot_password(request):
             email = request.POST.get('email')
 
             if User.objects.filter(email = email).first():
-                email_obj = User.objects.get(email = email)
+                email_obj = email
+                print(email_obj)
                 token = str(uuid.uuid4())
                 user_obj = User.objects.get(email = email_obj)
                 user_obj.password_token = token
@@ -233,7 +234,7 @@ def sending_token(request):
     return render(request, 'base/sending_token.html')
 
 def send_mail_for_registration(email, token):
-    subject = "Your verification mail for CommConnect"
+    subject = "Your verification mail for CourseDocs"
     message = f"Please click on this link to verify your email and Log in - http://127.0.0.1:8000/verify/{token}"
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [email]

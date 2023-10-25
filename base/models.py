@@ -23,7 +23,6 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, null=True)
     year = models.ForeignKey(Year, on_delete=models.CASCADE, null=True)
     branch = models.ForeignKey('Branch', on_delete=models.SET_NULL, null=True)
-    subjects = models.ManyToManyField('Subjects', related_name='user_subjects')
     is_verified = models.BooleanField(default=False, null=True)
     auth_token = models.CharField(max_length=200, null=True)
     password_token = models.CharField(max_length=200, null=True)

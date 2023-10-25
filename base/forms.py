@@ -25,15 +25,28 @@ class SubjectForm(ModelForm):
         widget=forms.CheckboxSelectMultiple(),
         label='Branch'
     )
+    members = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all().order_by('email'),
+        widget=forms.CheckboxSelectMultiple(),
+        label='Viewers'
+    )
+    editors = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all().order_by('email'),
+        widget=forms.CheckboxSelectMultiple(),
+        label='Editor'
+    )
 
     def __init__(self, *args, **kwargs):
         super(SubjectForm, self).__init__(*args, **kwargs)
         self.fields['year'].label_from_instance = lambda obj: obj.year
         self.fields['branch'].label_from_instance = lambda obj: obj.name
+        self.fields['members'].label_from_instance = lambda obj: obj.pname+ " -- " + obj.email
+        self.fields['editors'].label_from_instance = lambda obj: obj.pname+ " -- " + obj.email
 
     class Meta:
         model = Subjects
-        fields = '__all__'
+        fields = ['name', 'year', 'branch', 'members', 'editors', 'description']
+
 
 
 class MyUserCreationForm(UserCreationForm):

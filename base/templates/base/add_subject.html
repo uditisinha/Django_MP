@@ -92,7 +92,7 @@
 
 </style>
 <div class="content">
-    <h1 style = "font-size: 6vh; text-align: center; margin-top: 15vh; margin-bottom: 5vh;">Add Committee</h1>
+    <h1 style = "font-size: 6vh; text-align: center; margin-top: 15vh; margin-bottom: 5vh;">Add Subject</h1>
     <div class = "add_committee_main">
     <div class="form-wrapper">
         <form method="POST" action="">
@@ -122,8 +122,34 @@
                     </div>
                 </div>
             </div>
+            <div class="field-container">
+                <div>
+                    <p class="error-message">{{ form.members.errors }}</p>
+                    {{ form.members.label_tag }}
+                    <span class="dropdown-arrow" onclick="toggleDropdown3()">&#9662;</span>
+                    <div id="myDropdown3" class="dropdown-content">
+                        {{ form.members }}
+                    </div>
+                </div>
+                <div>
+                    <p class="error-message">{{ form.editors.errors }}</p>
+                    {{ form.editors.label_tag }}
+                    <span class="dropdown-arrow" onclick="toggleDropdown4()">&#9662;</span>
+                    <div id="myDropdown4" class="dropdown-content">
+                        {{ form.editors }}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container">
+                <div>
+                    {{ form.description.label_tag }}
+                    {{ form.description }}
+                    <p class="error-message">{{ form.description.errors }}</p>
+                </div>
+            </div>
+            
             <div style="display: flex; justify-content: center;">
-                <input type = "submit" value = "Add Committee" style = "margin-top: 10vh;">
+                <input type = "submit" value = "Add Subject" style = "margin-top: 10vh;">
             </div>
         </form>
     </div>
@@ -136,6 +162,14 @@
     }
     function toggleDropdown2() {
       var dropdownContent = document.getElementById("myDropdown2");
+      dropdownContent.classList.toggle("show"); 
+    }
+    function toggleDropdown3() {
+      var dropdownContent = document.getElementById("myDropdown3");
+      dropdownContent.classList.toggle("show"); 
+    }
+    function toggleDropdown4() {
+      var dropdownContent = document.getElementById("myDropdown4");
       dropdownContent.classList.toggle("show"); 
     }
   </script>
