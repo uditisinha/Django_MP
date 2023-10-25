@@ -48,7 +48,6 @@ class SubjectForm(ModelForm):
         fields = ['name', 'year', 'branch', 'members', 'editors', 'description']
 
 
-
 class MyUserCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
@@ -68,6 +67,7 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['avatar', 'pname', 'year']
+        
 
 class ReadOnlyWidget(widgets.Widget):
     def render(self, name, value, attrs=None, renderer=None):

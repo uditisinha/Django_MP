@@ -39,7 +39,6 @@ def home(request):
 
 @login_required(login_url = 'login')
 def subjects_list(request): 
-
     year = request.user.year
     if request.GET.get('q') != None:
         q = request.GET.get('q', '')
