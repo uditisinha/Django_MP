@@ -211,8 +211,11 @@
 <body>
 
       {% if check == '1' %}
-
-        <h1 style = "text-align: center; margin-top: 19vh; font-size: 6vh;">Your committee directories</h1>
+        {% if request.user.is_superuser %}
+          <h1 style = "text-align: center; margin-top: 19vh; font-size: 6vh;">All subjects</h1>
+        {% else %}
+          <h1 style = "text-align: center; margin-top: 19vh; font-size: 6vh;">Your subjects</h1>
+        {% endif %}
         <div class = "committees_directory">
           {% for dir in files %}
             {% if dir in subject_names %}
@@ -641,10 +644,13 @@
           {% if check2 is not 1 or request.user.is_superuser %}
           <form method = "POST" class = "searchbar_folders">
             {% csrf_token %}
+          
+          {% if is_editor or request.user.is_superuser  %}
           <div class = "add_folder">
             <input type = "text" id = "folderName" name = "name" class = "add_folder_field" placeholder = "Create new folder">
             <input type = "submit" name = "first_post" value = "Add" class = "add_folder_button">
           </div>
+          {% endif %}
             <input type = "hidden" name = "parent_directory" value = "{{directory}}">
           </form>
           {% endif %}
@@ -653,13 +659,11 @@
       <div class = "back4"></div>
       <div class = "back5"></div>
       <div class = "back6"></div>
-      
 
-
-    <div class = "searchbardiv_files">   
-      {% if check2 is not 1 or request.user.is_superuser %}
-      <button data-bs-toggle="modal" data-bs-target="#myModal" class = "add_files_button">Add Files</button>
-      {% endif %}
+    <div class = "searchbardiv_files">  
+        {% if is_editor or request.user.is_superuser  %}
+        <button data-bs-toggle="modal" data-bs-target="#myModal" class = "add_files_button">Add Files</button>
+        {% endif %}
       <form action="{{current_url}}" method="GET">
         <input type="text" name="q" placeholder="Search Files Here.." class = "searchbar_files">
       </form>
@@ -673,9 +677,9 @@
         <a href="{{f.1}}" class = "name_file">{{f.0.name}}</a>
         <hr style = "border-top: 0.2vh solid black; width: 30vh; margin-left: 5vh; margin-top: 1vh;">
         <p class = "source">Source: {{f.0}}</p>
-        {% if check2 is not 1 or request.user.is_superuser %}
-        <a href="{% url 'deletefile' f.0.id|urlencode%}" class = "delete_file">Delete file</a>
-        {% endif %}
+          {% if is_editor or request.user.is_superuser  %}
+            <a href="{% url 'deletefile' f.0.id|urlencode%}" class = "delete_file">Delete file</a>
+          {% endif %}
       </div>
       {% endfor %}
   </div>

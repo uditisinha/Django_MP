@@ -5,7 +5,7 @@
 
     .edit_profile_body{
         margin: auto;
-        margin-top: 18vh;
+        margin-top: 30vh;
         margin-bottom: 10vh;
         width: 70vh;
         background-color: #FEE2E2;
@@ -155,34 +155,6 @@
             <label for="{{ form.avatar.id_for_label }}">Profile Photo:</label><br>
             {{ form.avatar }}
         </div>
-        
-        <div class = "full_name">
-            <div class="field-container">
-                <label for="{{ form.honorific.id_for_label }}">Honorific:</label><br>
-                {{ form.honorific }}
-            </div>
-            <div class="field-container">
-                <label for="{{ form.pname.id_for_label }}">Full name:</label><br>
-                {{ form.pname }}
-            </div>
-        </div>
-
-        <div class="field-container">
-            <label for="{{ form.number.id_for_label }}">Number:</label><br>
-            {{ form.number }}
-        </div>
-        
-        <div class = "row2">
-            <div class="field-container">
-                <label for="{{ form.department.id_for_label }}">Department:</label><br>
-                {{ form.department }}
-            </div>
-            <div class="field-container">
-                <label for="{{ form.position.id_for_label }}">Position:</label><br>
-                {{ form.position }}
-            </div>
-        </div>
-
         
     <a href = "{{ request.META.HTTP_REFERER }}" class = "cancel_profile_edit"><- Go back to Profile</a>
 

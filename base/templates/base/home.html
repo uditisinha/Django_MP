@@ -382,7 +382,11 @@
     </style>
 
 <img src = "../media/images/committee.png" class = "committee_png">
+{% if request.user.is_superuser %}
+<h1 style = "font-size: 6vh; text-align: center;">All Subjects</h1>
+{% else %}
 <h1 style = "font-size: 6vh; text-align: center;">Your Subjects</h1>
+{% endif %}
     <div id = "carouselExampleIndicators" class = "carousel slide" style = "box-shadow: 0px 0px 0.8vh rgba(0, 0, 0, 0.603);">
         <div class = "carousel-indicators">
             {% for subject in subject_list %}
@@ -397,18 +401,30 @@
                 <a href="{% url 'subject' subject.id %}"><h1 class="committee_name_slider">{{ subject }}</h1></a>
                 <h4 class = "committee_description_slider">{{subject.description}}</h4>
                 
-              {% if user in subject.editors.all %}
+                {% if request.user.is_superuser %}
               <div class = "position_home">
                 <h4>Position:</h4>
-                <h1 class = "position_inner">Editor</h1>
+                <h1 class = "position_inner">Admin</h1>
               </div>
-              {% endif %}
 
-              {% if user in subject.members.all %}
-              <div class = "position_home">
-                <h4>Position:</h4>
-                <h1 class = "position_inner">Viewer</h1>
-              </div>
+              {% else %}
+
+                {% if user in subject.editors.all %}
+                <div class = "position_home">
+                    <h4>Position:</h4>
+                    <h1 class = "position_inner">Editor</h1>
+                </div>
+                {% else %}
+
+                    {% if user not in subject.editors.all %}
+                    <div class = "position_home">
+                        <h4>Position:</h4>
+                        <h1 class = "position_inner">Viewer</h1>
+                    </div>
+                    {% endif %}
+
+                {% endif %}
+              
               {% endif %}
 
             <a href = "/media/files/{{subject}}/"><button class = "redirect_folder">Show folder</button></a>
@@ -461,13 +477,15 @@
     <div class = "leftcontacts">
         <img src = "../media/images/call.png" class = "contact_png"> 
         <p>+91 9757024851</p>
-        <p>+91 8169925301</p>
+        <p>+91 7016309073</p>
+        <p>+91 7045733241</p>
     </div>
 
     <div class = "rightcontacts">
         <img src = "../media/images/mail.png" class = "contact_png">
         <p>uditi.sinha@somaiya.edu</p>
-        <p>priyansh.r@somaiya.edu</p>
+        <p>chirag.sharma@somaiya.edu</p>
+        <p>aditya.ved@somaiya.edu</p>
     </div>
 </div>
 </div>

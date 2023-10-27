@@ -152,16 +152,16 @@
             width: 70vh;
         }
 
+        .field-container input[name = "pname"]{
+            width: 70vh;
+        }
+
         .field-container input[name = "password1"]{
             width: 33vh;
         }
 
         .field-container input[name = "password2"]{
             width: 33vh;
-        }
-
-        .full_name{
-            display: flex;
         }
 
         .row2{
@@ -355,30 +355,28 @@
         <div class = "rightregister">
         <div class="form-wrapper">     
         
-        <div class = "full_name">
             <div class="field-container">
                 <label for="{{ form.pname.id_for_label }}">Full name:</label><br>
                 {{ form.pname }}
                 <p class="error-message">{{ form.pname.errors }}</p>
             </div>
-        </div>
 
-        <div class="field-container">
-            <label for="{{ form.email.id_for_label }}">Email:</label><br>
-            {{ form.email }}
-            <p class="error-message">{{ form.email.errors }}</p>
-        </div>
-        
-        <div class = "row2">
             <div class="field-container">
-                <label for="{{ form.department.id_for_label }}">Branch:</label><br>
-                {{ form.branch }}
+                <label for="{{ form.email.id_for_label }}">Email:</label><br>
+                {{ form.email }}
+                <p class="error-message">{{ form.email.errors }}</p>
             </div>
-            <div class="field-container">
-                <label for="{{ form.position.id_for_label }}">Year:</label><br>
-                {{ form.year }}
+            
+            <div class = "row2">
+                <div class="field-container">
+                    <label for="{{ form.department.id_for_label }}">Branch:</label><br>
+                    {{ form.branch }}
+                </div>
+                <div class="field-container">
+                    <label for="{{ form.position.id_for_label }}">Year:</label><br>
+                    {{ form.year }}
+                </div>
             </div>
-        </div>
 
             <div class="field-container">
                 <label for="{{ form.username.id_for_label }}">Username:</label><br>

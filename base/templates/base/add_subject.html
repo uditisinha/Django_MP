@@ -90,6 +90,10 @@
         color: #B7202E;
     }
 
+    .description{
+        margin-top: 5vh;
+    }
+
 </style>
 <div class="content">
     <h1 style = "font-size: 6vh; text-align: center; margin-top: 15vh; margin-bottom: 5vh;">Add Subject</h1>
@@ -124,14 +128,6 @@
             </div>
             <div class="field-container">
                 <div>
-                    <p class="error-message">{{ form.members.errors }}</p>
-                    {{ form.members.label_tag }}
-                    <span class="dropdown-arrow" onclick="toggleDropdown3()">&#9662;</span>
-                    <div id="myDropdown3" class="dropdown-content">
-                        {{ form.members }}
-                    </div>
-                </div>
-                <div>
                     <p class="error-message">{{ form.editors.errors }}</p>
                     {{ form.editors.label_tag }}
                     <span class="dropdown-arrow" onclick="toggleDropdown4()">&#9662;</span>
@@ -141,7 +137,7 @@
                 </div>
             </div>
             <div class="field-container">
-                <div>
+                <div class = "description">
                     {{ form.description.label_tag }}
                     {{ form.description }}
                     <p class="error-message">{{ form.description.errors }}</p>

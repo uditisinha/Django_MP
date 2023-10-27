@@ -112,8 +112,8 @@
 
 <div class = "card_content">
     <div class = "location">
-        <label style = "font-size: 2.5vh;">Committee:</label>
-        <p class = "path">{{f.0.committee}}</p>
+        <label style = "font-size: 2.5vh;">Folder:</label>
+        <p class = "path">{{f.0.subject}}</p>
     </div>
 
     <div class = "location">
@@ -121,10 +121,6 @@
         <p class = "path">{{f.1}}</p>
     </div>
 </div>
-
-  {% if f.2 %}
-    <a class = "delete_file" href="{% url 'deletefile' f.0.id|urlencode%}">Delete</a>
-  {% endif %}
   </div>
   <br>
   {% endfor %}  

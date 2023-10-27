@@ -37,7 +37,6 @@ class Subjects(models.Model):
     year = models.ManyToManyField(Year, related_name='subject_year')
     branch = models.ManyToManyField('Branch', related_name='subject_branch')
     description = models.TextField(max_length=1000, null=True)
-    members = models.ManyToManyField(User, related_name='subject_members', null=True, blank=True)
     editors = models.ManyToManyField(User, related_name='subject_editors', null=True, blank=True)
 
     def __str__(self):
@@ -62,8 +61,6 @@ class Folder(models.Model):
 def delete_subject_folder(sender,instance,**kwargs):
     folder_name = instance.name
     path = str(settings.MEDIA_ROOT) +'\\files/'+f'{folder_name}/'
-    folder = Folder.objects.get(parent_directory=path)
-    folder.delete()
 
 
 @receiver(pre_delete, sender=Folder)

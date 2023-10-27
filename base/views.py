@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import FolderForm,FileForm
 from django.core.mail import EmailMessage
 import uuid
+import re
 from django.core.mail import send_mail
 import os
 
@@ -25,7 +26,7 @@ def home(request):
         user = request.user
         subject_list = list(
             Subjects.objects.exclude(
-                ~Q(editors = user) & ~Q(members = user)
+                ~Q(editors = user) & ~Q(year = user.year)
             )
         )
         context = {
@@ -49,6 +50,11 @@ def subjects_list(request):
         Q(name__icontains = q),
         year = year
     )
+
+    if request.user.is_superuser:
+        selected_subjects = Subjects.objects.filter(
+            Q(name__icontains = q),
+        )
 
     subjects = Subjects.objects.all()
     context = {'subjects': subjects, 'selected_subjects': selected_subjects}
@@ -184,7 +190,6 @@ def logoutuser(request):
     messages.success(request, 'Successfully Logged Out.')
     return redirect('home')
 
-
 def registeruser(request):
     form = MyUserCreationForm()
     page = 'register'
@@ -195,35 +200,38 @@ def registeruser(request):
     if request.method == "POST":
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
-
+            
+            # Check if the email matches the allowed domain
+            if not re.match(r'^[a-zA-Z0-9._%+-]+@somaiya\.edu$', email):
+                messages.error(request, 'Only users with email addresses ending with "@somaiya.edu" are allowed to register.')
+                return redirect('register')
+            
             # Check if a user with the provided email already exists
             existing_user = User.objects.filter(email=email).first()
 
             if existing_user:
                 if not existing_user.is_verified:
                     messages.error(request, 'Email has been sent to you for verification.')
-
             else:
-                if email != None:
-
+                if email:
+                    user = form.save(commit=False)
                     user.username = username.lower()
                     user.auth_token = str(uuid.uuid4())
                     token = user.auth_token
                     user.save()
 
                     send_mail_for_registration(email, token)
-                    messages.error(request, 'Please click on the link mailed to your email ID to verify account.')
+                    messages.success(request, 'Please click on the link mailed to your email ID to verify your account.')
 
                     return redirect('/')
-                
                 else:
                     messages.error(request, 'You are not authorized. Please contact the HOD for authorization.')
 
     context = {'form': form, 'page': page}
     return render(request, 'base/login_register.html', context)
+
 
 
 def success(request):
@@ -291,13 +299,13 @@ def edit_profile(request, pk):
 @login_required(login_url = 'login')
 def profile(request,pk):
     user = User.objects.get(id=pk)
-    Subjects =  list(
+    subject_list =  list(
         Subjects.objects.exclude(
-                ~Q(editors = user) & ~Q(members = user)
+                ~Q(editors = user) & ~Q(year = user.year)
             ))
     
     context={
-        'Subjects':Subjects,
+        'subjects':subject_list,
         'user':user
     }
     return render(request,'base/profile.html',context)
@@ -385,12 +393,12 @@ def search_files(request):
     else:
         q = ''
     user = request.user
-    Subjects = Subjects.objects.filter(members=user) | Subjects.objects.filter(editors=user)
+    subjects = Subjects.objects.filter(year=user.year) | Subjects.objects.filter(editors=user)
     filtered_files = File.objects.filter(
         (Q(name__icontains = q) | Q(keywords__icontains = q) | Q(subject__name__icontains = q))
     )
     subject_list=[]
-    for c in Subjects:
+    for c in subjects:
         subject_list.append(c.name)
     bool_list=[]
     search_file_paths=[]
@@ -400,7 +408,7 @@ def search_files(request):
             bool_list.append(True)
         else:
             bool_list.append(False)
-
+            
     files_context = []
     for i in range(len(filtered_files)):
         files_context.append([filtered_files[i],search_file_paths[i],bool_list[i]])
@@ -423,7 +431,7 @@ def filestructure(request,path=''):
     flag2=0
     user = request.user
     subject_names=[]
-    user_Subjects = Subjects.objects.filter(members=user) | Subjects.objects.filter(editors=user)
+    user_Subjects = Subjects.objects.filter(year=user.year) | Subjects.objects.filter(editors=user)
     if user.is_superuser:
         user_Subjects = Subjects.objects.all()
     for names in user_Subjects:
@@ -530,6 +538,16 @@ def filestructure(request,path=''):
             print("NOT VALID")
     
     files_context=[]
+    is_editor = False
+    for subject in subject_names:
+        # Check if the subject is related to the current file or directory
+        url = files_url + subject
+        if (url in unquote(current_url)):
+            subject_id = Subjects.objects.get(name=subject)
+            # Check if the user is an editor of the subject
+            if subject_id.editors.filter(id=user.id).exists() or user.is_superuser:
+                is_editor = True
+            break
 
     for i in range(len(file_paths)):
         files_context.append([files_to_access[i],file_paths[i],file_extensions[i]])
@@ -547,5 +565,6 @@ def filestructure(request,path=''):
         'current_url':current_url,
         'back_url':back_url,
         'subject_names':subject_names,
+        'is_editor': is_editor,
     }
     return render(request,'base/file_structure.html',context)

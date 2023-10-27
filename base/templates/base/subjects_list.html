@@ -184,7 +184,7 @@
             </div>
             
             <div class = "level">
-                {% if request.user in subject.members.all %}
+                {% if request.user not in subject.editors.all %}
                     <h5>
                         Viewer
                     </h5>
@@ -206,7 +206,7 @@
 {% if request.user.is_superuser %}
     <div class = "add_button">
         <a href = "{% url 'create_subject' %}">
-            <input type = button value = 'Add Committee' class = "add_committees">
+            <input type = button value = 'Add Subject' class = "add_committees">
         </a>
     </div>
 {% endif %}

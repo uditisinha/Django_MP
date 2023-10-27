@@ -285,56 +285,49 @@
 
   <div class="details">
     <div class="leftdetails">
-      <h4>Department</h4>
-      <h6>{{user.department}}</h6>
-      <h4>Position</h4>
-      <h6>{{user.position}}</h6>
+      <h4>Branch</h4>
+      <h6>{{user.branch}}</h6>
+      <h4>Year</h4>
+      <h6>{{user.year}}</h6>
     </div>
     <div class="rightdetails">
       <h4></h4>
       <h6></h6>
       <h4>Email</h4>
       <h6>{{user.email}}</h6> 
-      <h4>Number</h4>
-      <h6>{{user.number}}</h6>
+      <h4>Username</h4>
+      <h6>{{user.username}}</h6>
     </div>
 
     <div id = "carouselExampleIndicators" class = "carousel slide">
       <div class = "carousel-indicators">
-          {% for committee in committees %}
+          {% for subject in subjects %}
               <button type = "button" data-bs-target = "#carouselExampleIndicators" data-bs-slide-to = "{{ forloop.counter0 }}" {% if forloop.first %} class="active"{% endif %} aria-label = "Slide {{ forloop.counter }}" style = "width: 5vh">
               </button>
           {% endfor %}
       </div>
             
       <div class = "carousel-inner">
-          {% for committee in committees %}
+          {% for subject in subjects %}
           <div class = "carousel-item {% if forloop.first %}active{% endif %}">
-            <a href="{% url 'committee' committee.id %}"><h1 class = "committee_name_slider">{{committee}}</h1></a>
+            <a href="{% url 'subject' subject.id %}"><h1 class = "committee_name_slider">{{subject}}</h1></a>
 
-              {% if user == committee.convener %}
+              {% if user in subject.editors.all %}
               <div class = "position">
                 <h4>Position:</h4>
-                <h1 class = "position_inner">Convener</h1>
+                <h1 class = "position_inner">Editor</h1>
               </div>
               {% endif %}
 
-              {% if user in committee.members.all %}
+              {% if user not in subject.editors.all %}
               <div class = "position">
                 <h4>Position:</h4>
-                <h1 class = "position_inner">Member</h1>
-              </div>
-              {% endif %}
-
-              {% if user in committee.staff.all %}
-              <div class = "position">
-                <h4>Position:</h4>
-                <h1 class = "position_inner">Staff</h1>
+                <h1 class = "position_inner">Viewer</h1>
               </div>
               {% endif %}
 
             {% if request.user.id == user.id %}
-              <a href = "/media/files/{{committee}}/"><button class = "redirect_folder">Show folder</button></a>
+              <a href = "/media/files/{{subject}}/"><button class = "redirect_folder">Show folder</button></a>
             {% endif %}
             </div>
           {% endfor %}
