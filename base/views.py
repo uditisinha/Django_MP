@@ -24,11 +24,15 @@ import os
 def home(request):
     if request.user.is_authenticated :
         user = request.user
-        subject_list = list(
-            Subjects.objects.exclude(
-                ~Q(editors = user) & ~Q(year = user.year)
+        if user.is_superuser:
+            subject_list = Subjects.objects.all
+        
+        else:
+            subject_list = list(
+                Subjects.objects.exclude(
+                    ~Q(editors = user) & ~Q(year = user.year)
+                )
             )
-        )
         context = {
             'subject_list': subject_list,
         }
@@ -46,15 +50,17 @@ def subjects_list(request):
     else:
         q = ''
 
-    selected_subjects = Subjects.objects.filter(
-        Q(name__icontains = q),
-        year = year
-    )
-
     if request.user.is_superuser:
         selected_subjects = Subjects.objects.filter(
             Q(name__icontains = q),
         )
+    
+    else:
+        selected_subjects = Subjects.objects.filter(
+            Q(name__icontains = q),
+            year = year
+        )
+
 
     subjects = Subjects.objects.all()
     context = {'subjects': subjects, 'selected_subjects': selected_subjects}
