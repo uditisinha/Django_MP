@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<head>
+    <style>
+        .delete_form{
+            margin-top: 30vh;
+            text-align: center;
+            width: 150vh;
+            word-wrap: break-word;
+            margin-left: 25vh;
+        }
+
+        .delete_form p{
+            font-size: 4vh;
+            margin-bottom: 5vh;
+        }
+
+        .delete_form p2{
+            font-size: 2.5vh;
+        }
+
+        .delete_file_confirm{
+            margin-top: 5vh;
+            font-size: 2.5vh;
+            padding: 2vh;
+            color: white;
+            border-radius: 1vh;
+            background-color: #B7202E;
+            border-style: solid;
+            border-width: 0.1vh;
+        }
+
+        .delete_file_confirm:hover{
+            background-color: #821925;
+        }
+
+        .go_back_delete{
+            margin-top: 5vh;
+            font-size: 2.5vh;
+            padding: 2vh;
+            border-radius: 1vh;
+            background-color: white;
+            border-style: solid;
+            border-width: 0.1vh;
+            border-color: #B7202E;
+            width: 20vh;
+            margin-right: 3vh;
+            margin-left: 90vh;
+        }
+
+        .go_back_delete:hover{
+            background-color: #D9D9D9;
+        }
+
+    </style>
+</head>
+<div class="content">
+    <form id="delete-form" method="POST" action="" class = "delete_form">
+        {% csrf_token %}
+        <p>Are you sure you want to delete</p>
+        <p2>"{{ obj }}"?</p2>
+        <br>
+
+        <input type = "submit" value="Confirm Deletion" class = "delete_file_confirm" name = "delete_file_confirm">
+    </form>
+
+    <button class = "go_back_delete">
+        <a href="{{ request.META.HTTP_REFERER }}" style = "font-size: 2.5vh; text-decoration: none; color: #B7202E;">
+            Go Back
+        </a></button>
+</div>
+
+{% endblock content%}
